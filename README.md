@@ -25,7 +25,7 @@ Dengan Cookozy, makanan sehat dan lezat selalu dalam genggaman Anda. Temukan res
 
 Kunjungi situs web Cookozy sekarang juga dan mulai menjelajahi dunia resep makanan sehat yang menyenangkan!
 
-[**Kunjungi Cookozy**](https://github.com/cookozy)
+[**Kunjungi Cookozy**](https://github.com/idlofizahir86/cookozy)
 
 --- 
 
