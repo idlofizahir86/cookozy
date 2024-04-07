@@ -47,33 +47,42 @@ class LoginController extends Controller
     public function __construct(FirebaseAuth $auth)
     {
         $this->middleware("guest")->except("logout");
-        $this->auth =app("firebase.auth");
+        $this->auth = $auth;
+        // $this->auth =app("firebase.auth");
       // $auth = app("firebase.auth");
     }
 
     protected function login(Request $request)
-    {
-        try {
-            $auth = app("firebase.auth");
-            $signInResult = $auth->signInWithEmailAndPassword(
-                $request["email"],
-                $request["password"]
-            );
-            $user = new User($signInResult->data());
+{
+    try {
+        $auth = app("firebase.auth");
+        $signInResult = $auth->signInWithEmailAndPassword(
+            $request["email"],
+            $request["password"]
+        );
+        $user = new User($signInResult->data());
 
-            //uid Session
-            $loginuid = $signInResult->firebaseUserId();
-            Session::put('uid',$loginuid);
+        // Ambil UID pengguna yang login
+        $uid = $signInResult->firebaseUserId();
 
-            $result = Auth::login($user);
-            return redirect($this->redirectPath());
+        // Generate Sanctum token
+        $token = $user->createToken('token-name')->plainTextToken;
 
-        } catch (FirebaseException $e) {
-            throw ValidationException::withMessages([
-                $this->username() => [trans("auth.failed")],
-            ]);
-        }
+        // Simpan token bersama dengan UID pengguna ke dalam Firestore
+        $firestore = Firebase::firestore();
+        $tokensRef = $firestore->database()->collection('tokens')->document($uid);
+        $tokensRef->set(['token' => $token, 'user_id' => $uid]);
+
+        // Redirect atau respons sukses
+        return redirect($this->redirectPath());
+    } catch (FirebaseException $e) {
+        throw ValidationException::withMessages([
+            $this->username() => [trans("auth.failed")],
+        ]);
     }
+}
+
+
     public function username()
     {
         return "email";

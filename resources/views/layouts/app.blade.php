@@ -21,10 +21,10 @@
 </head>
 <body  style="min-height:90vh;">
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+        <nav class="navbar navbar-expand-md navbar-light bg-surface-secondary shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
+                <img src="https://firebasestorage.googleapis.com/v0/b/cookozy-if4506.appspot.com/o/Assets%2FCookozy-svg.svg?alt=media&token=7a4164c2-2734-4928-8363-37af32ca3656" class="h-10" alt="Cookozy-icon">
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
@@ -54,7 +54,7 @@
                         @else
 
                           <li class="nav-item">
-                              <a class="nav-link text-dark" href="home/profile">{{ __('Profile') }}</a>
+                              <a class="nav-link text-dark" href="{{ url('/home/profile') }}">{{ __('Profile') }}</a>
                           </li>
 
                           <li class="nav-item">

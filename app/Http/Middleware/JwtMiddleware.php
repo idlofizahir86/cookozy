@@ -6,11 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-use Kreait\Firebase\Contract\Auth;
-use Kreait\Firebase\Exception\FirebaseException;
-use Session;
-
-class VerifyUser
+class JwtMiddleware
 {
     /**
      * Handle an incoming request.
@@ -19,13 +15,6 @@ class VerifyUser
      */
     public function handle(Request $request, Closure $next): Response
     {
-      $uid = Session::get('uid');
-      $verify = app('firebase.auth')->getUser($uid)->emailVerified;
-        if ($verify == 0) { 
-          return redirect()->route('verify');
-        }
-        else{
         return $next($request);
-     }
     }
 }

@@ -21,6 +21,7 @@ class User extends Authenticatable
         'displayName',
         'email',
         'localId',
+        'role',
     ];
 
     public function getAuthIdentifierName() {

@@ -1,13 +1,15 @@
 @extends('layouts.app')
 
 @section('content')
-
+<body class="bg-surface-secondary">
   <div class="container">
     <div class="row justify-content-center">
-      <div class="col-md-8">
-        <div class="card">
-          <div class="card-header">Reset Password</div>
-          <div class="card-body">
+      <div class="col-lg-10 col-md-9 col-xl-6 mx-auto ms-xl-0">
+        <div class="mt-10 mt-lg-5 mb-6 d-flex align-items-center d-lg-block">
+        <h1 class="ls-tight font-bolder h2">
+                                {{ __('Reset Password') }}
+                            </h1>
+</div>
 
             @if(Session::has('message'))
               <div class="alert alert-info alert-dismissible fade show">
@@ -52,4 +54,5 @@
       </div>
     </div>
   </div>
+</body>
 @endsection
