@@ -1,15 +1,13 @@
 # Cookozy - Platform Resep Sehat untuk Anak Kost
 
-![Cookozy Logo](https://link.to.your/logo.png)
+![Cookozy Logo](https://firebasestorage.googleapis.com/v0/b/cookozy-if4506.appspot.com/o/Assets%2FCookozy-svg.svg?alt=media&token=7a4164c2-2734-4928-8363-37af32ca3656)
 
 Cookozy adalah platform resep makanan sehat yang dirancang khusus untuk mahasiswa yang sibuk. Dengan Cookozy, Anda dapat menemukan berbagai resep makanan yang mudah dan cepat untuk disiapkan, menggunakan bahan-bahan sederhana yang tersedia di sekitar Anda.
 
 ## Fitur Utama
 
 - **Koleksi Resep Luas**: Jelajahi berbagai resep makanan sehat yang dikurasi secara khusus untuk memenuhi kebutuhan nutrisi Anda.
-- **Filter Berdasarkan Bahan**: Temukan resep berdasarkan bahan-bahan yang Anda miliki di dapur Anda.
 - **Tutorial Langkah demi Langkah**: Ikuti panduan langkah demi langkah yang mudah dipahami untuk memasak hidangan lezat Anda sendiri.
-- **Simpan dan Bagikan**: Simpan resep favorit Anda dan bagikan dengan teman-teman Anda melalui platform media sosial.
 
 ## Teknologi yang Digunakan
 
