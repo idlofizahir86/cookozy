@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RecipeController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\CheckAuthentication;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,13 +17,28 @@ use App\Http\Controllers\Auth\LoginController;
 |
 */
 
-Route::get('/recipes',[RecipeController::class, 'index']);
-Route::get('/recipes/{id}',[RecipeController::class, 'show']);
-Route::post('/recipes',[RecipeController::class, 'store']);
+Route::post('/recipes',[RecipeController::class, 'store'])->name('recipes.store');
+Route::get('/recipes', [RecipeController::class, 'index'])->name('recipes.index');
+Route::get('/recipes/{id}', [RecipeController::class, 'show'])->name('recipes.show');
+Route::get('/recipes/{id}/edit', [RecipeController::class, 'edit'])->name('recipes.edit');
+Route::put('/recipes/{id}', [RecipeController::class, 'update'])->name('recipes.update');
+Route::delete('/recipes/delete/{id}',[RecipeController::class, 'destroy'])->name('recipes.delete');
+
 
 Route::post('/login',[LoginController::class, 'login']);
+Route::get('/user',[LoginController::class, 'userInfo'])->middleware("auth");
+
+// Route::middleware('auth:api')->group(function () {
+//     // Route::get('/user', function (Request $request) {
+//     //     return $request->user();
+//     // });
+
+//     // Tambahkan rute API lainnya yang memerlukan otentikasi di sini
+// });
+
 
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+

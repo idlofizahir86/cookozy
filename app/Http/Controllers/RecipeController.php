@@ -110,4 +110,114 @@ class RecipeController extends Controller
     }
 
 
+public function update(Request $request, $id)
+{
+    // Validasi request
+    $validatedData = $request->validate([
+        'title' => 'required|string|max:255',
+        'description' => 'required|string',
+        // Sesuaikan dengan atribut lain yang ingin Anda perbarui
+    ]);
+
+    // Dapatkan UID pengguna yang sedang login
+    $uid = Auth::id();
+
+    // Konfigurasi Firebase menggunakan credentials
+    $serviceAccount = base_path('resources\credentials\firebase_credentials.json');
+    $factory = (new Factory)->withServiceAccount($serviceAccount);
+    $this->firestore = $factory->createFirestore();
+
+
+    // Dapatkan dokumen resep dari Firestore berdasarkan ID
+    $firestore = Firebase::firestore();
+    $recipeRef = $firestore->database()->collection('recipes')->document($id);
+    $recipeSnapshot = $recipeRef->snapshot();
+
+    // Periksa apakah dokumen ditemukan
+    if (!$recipeSnapshot->exists()) {
+        return response()->json(['error' => 'Recipe not found'], 404);
+    }
+
+    // Dapatkan data resep
+    $recipeData = $recipeSnapshot->data();
+
+    // dd($recipeData);
+    // // Periksa apakah pengguna yang sedang login memiliki akses untuk memperbarui resep
+    // if ($recipeData['user_id'] !== $uid) {
+    //     $message = "Unauthorized access: User $uid attempted to update recipe with ID $id owned by user {$recipeData['user_id']}.";
+    //     \Illuminate\Support\Facades\Log::info($message);
+    //     return response()->json([
+    //         'error' => 'Unauthorized',
+    //         'message' => 'User is not authorized to update this recipe.',
+    //         'user_id_attempted' => $uid,
+    //         'user_id_recipe_owner' => $recipeData['user_id']
+    //     ], 401);
+    // }
+
+    // Perbarui data resep dengan data yang diterima dari request
+    $updatedData = array_merge($recipeData, $validatedData);
+
+    // Simpan data yang diperbarui kembali ke Firestore
+    $recipeRef->set($updatedData);
+
+    // Respon sukses
+    return response()->json(['message' => 'Recipe updated successfully']);
+}
+
+    public function destroy(Request $request, $id)
+    {
+        // Dapatkan UID pengguna yang sedang login
+        // $uid = Auth::id();
+
+        // Dapatkan dokumen resep dari Firestore berdasarkan ID
+        $firestore = Firebase::firestore();
+        $recipeRef = $firestore->database()->collection('recipes')->document($id);
+        $recipeSnapshot = $recipeRef->snapshot();
+
+        // Periksa apakah dokumen ditemukan
+        if (!$recipeSnapshot->exists()) {
+            return response()->json(['error' => 'Recipe not found'], 404);
+        }
+
+        // Dapatkan data resep
+        $recipeData = $recipeSnapshot->data();
+
+        // Periksa apakah pengguna yang sedang login memiliki akses untuk menghapus resep
+        // if ($recipeData['user_id'] !== $uid) {
+        //     $message = "Unauthorized access: User $uid attempted to delete recipe with ID $id owned by user {$recipeData['user_id']}.";
+        //     \Illuminate\Support\Facades\Log::info($message);
+        //     return response()->json([
+        //         'error' => 'Unauthorized',
+        //         'message' => 'User is not authorized to delete this recipe.',
+        //         'user_id_attempted' => $uid,
+        //         'user_id_recipe_owner' => $recipeData['user_id']
+        //     ], 401);
+        // }
+
+        // Hapus dokumen resep dari Firestore
+        $recipeRef->delete();
+
+        // Respon sukses
+        return response()->json(['message' => 'Recipe deleted successfully']);
+    }
+
+
+    public function edit($id)
+    {
+        // Inisialisasi Firestore
+        $db = new FirestoreClient();
+
+        // Ambil data resep berdasarkan ID dari Firestore
+        $recipeRef = $db->collection('recipes')->document($id);
+        $recipe = $recipeRef->snapshot()->data();
+
+        // Pastikan pengguna memiliki izin untuk mengedit resep
+        if ($recipe['user_id'] != auth()->id()) {
+            return abort(403); // Forbidden
+        }
+
+        // Kirimkan data resep ke view edit.blade.php
+        return view('recipes.edit', compact('recipe'));
+    }
+
 }

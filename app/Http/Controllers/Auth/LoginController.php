@@ -15,6 +15,7 @@ use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\Auth;
 use Session;
 use App\Models\User;
+use Firebase\JWT\JWT;
 
 class LoginController extends Controller
 {
@@ -47,8 +48,8 @@ class LoginController extends Controller
     public function __construct(FirebaseAuth $auth)
     {
         $this->middleware("guest")->except("logout");
-        $this->auth = $auth;
-        // $this->auth =app("firebase.auth");
+        // $this->auth = $auth;
+        $this->auth =app("firebase.auth");
       // $auth = app("firebase.auth");
     }
 
@@ -60,33 +61,71 @@ class LoginController extends Controller
             $request["email"],
             $request["password"]
         );
-        $user = new User($signInResult->data());
 
         // Ambil UID pengguna yang login
-        $uid = $signInResult->firebaseUserId();
+        $loginuid = $signInResult->firebaseUserId();
+        Session::put('uid', $loginuid);
 
-        // Generate Sanctum token
-        $token = $user->createToken('token-name')->plainTextToken;
+        // Ambil token akses dari respons autentikasi
+        $accessToken = $signInResult->idToken();
 
-        // Simpan token bersama dengan UID pengguna ke dalam Firestore
-        $firestore = Firebase::firestore();
-        $tokensRef = $firestore->database()->collection('tokens')->document($uid);
-        $tokensRef->set(['token' => $token, 'user_id' => $uid]);
+        // Jika permintaan adalah API, kembalikan token JWT sebagai respons
+        if ($request->wantsJson()) {
+            return response()->json(['token' => $accessToken]);
+        }
 
-        // Redirect atau respons sukses
+        // Jika bukan API, setel pengguna yang berhasil masuk ke dalam sesi Laravel
+        $user = new User($signInResult->data());
+        Auth::login($user);
+
+        // Redirect ke halaman yang sesuai setelah berhasil login
         return redirect($this->redirectPath());
-    } catch (FirebaseException $e) {
+    } catch (\Kreait\Firebase\Exception\Auth\SignIn\FailedToSignIn $e) {
         throw ValidationException::withMessages([
             $this->username() => [trans("auth.failed")],
         ]);
     }
 }
+    protected function generateJWT($uid)
+    {
+        // Atur klaim token JWT, misalnya UID pengguna
+        $payload = [
+            'uid' => $uid,
+            'exp' => time() + (60 * 60), // Token berlaku selama 1 jam (3600 detik)
+        ];
 
+        // Buat token JWT dengan menggunakan kunci rahasia yang disimpan di lingkungan Anda
+        $jwt = JWT::encode($payload, env('JWT_SECRET'), 'HS256');
+
+        return $jwt;
+    }
 
     public function username()
     {
         return "email";
     }
+
+        public function userInfo(Request $request)
+        {
+            // Periksa apakah pengguna sudah terotentikasi
+            if (Auth::check()) {
+                // Dapatkan pengguna yang terotentikasi
+                $user = Auth::user();
+
+                // Generate JWT Token
+                $token = Auth::guard('api')->login($user);
+
+                // Kembalikan respons JSON yang berisi token dan data pengguna
+                return response()->json([
+                    'token' => $token,
+                    'user' => $user
+                ]);
+            }
+
+            // Jika pengguna belum terotentikasi, kembalikan respons kesalahan
+            return response()->json(['error' => 'Unauthorized'], 401);
+        }
+
     public function handleCallback(Request $request, $provider)
     {
         $socialTokenId = $request->input("social-login-tokenId", "");

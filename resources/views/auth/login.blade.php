@@ -28,7 +28,7 @@
                                 {{ __('Nice to see you!') }}
                             </h1>
                         </div>
-                        <form method="POST" action="{{ route('login') }}">
+                        <form id="login-form" method="POST" action="{{ route('login') }}">
                             @csrf
                             <div class="mb-5">
                                 <label class="form-label" for="email">{{ __('E-Mail Address') }}</label>
@@ -68,7 +68,7 @@
                                 </div>
                             </div>
                             <div>
-                                <button type="submit" class="btn btn-primary w-full">
+                                <button id="submit" type="submit" class="btn btn-primary w-full">
                                     {{ __('Sign in') }}
                                 </button>
                             </div>
@@ -124,5 +124,83 @@
           console.log(error);
         });
       }
+
+//       function updateSessionAndReload(access_token = '') {
+//         if (access_token != '') {
+//             sessionStorage.setItem('access_token', access_token);
+//             $('[id^="login_input"]').val('');
+//             location.reload();
+//         } else {
+//             sessionStorage.removeItem('access_token');
+//         }
+//     }
+
+//     // Fungsi untuk melakukan login dengan Firebase
+//     function loginUser(email, password) {
+//     firebase.auth().signInWithEmailAndPassword(email, password)
+//         .then((userCredential) => {
+//             // Dapatkan objek user dari userCredential
+//             var user = userCredential.user;
+
+//             // Dapatkan token akses dengan menggunakan getIdToken()
+//             user.getIdToken()
+//                 .then((accessToken) => {
+//                     // Panggil fungsi updateSessionAndReload untuk mengupdate sessionStorage dan reload halaman
+//                     updateSessionAndReload(accessToken);
+//                 })
+//                 .catch((error) => {
+//                     // Tangani kesalahan jika gagal mendapatkan token akses
+//                     console.error('Error:', error);
+//                 });
+//         })
+//         .catch((error) => {
+//             // Tangani kesalahan jika login gagal
+//             console.error('Error:', error);
+//         });
+// }
+
+
+//     // Tangani submit form login
+//     document.getElementById('login-form').addEventListener('submit', function(event) {
+//         event.preventDefault(); // Menghentikan perilaku default form
+
+//         var email = document.getElementById('email').value;
+//         var password = document.getElementById('password').value;
+
+//         // Memanggil fungsi loginUser untuk melakukan login
+//         loginUser(email, password);
+//     });
+
+      // Tangani submit form
+    // document.getElementById('login-form').addEventListener('submit', function(event) {
+    //     event.preventDefault(); // Menghentikan perilaku default form
+
+    //     var email = document.getElementById('email').value;
+    //     var password = document.getElementById('password').value;
+
+    //     // Sign in dengan email dan password
+    //     firebase.auth().signInWithEmailAndPassword(email, password)
+    //         .then((userCredential) => {
+    //             // Pengguna berhasil login, dapatkan token otentikasi
+    //             return userCredential.user.getIdToken();
+    //         })
+    //         .then((idToken) => {
+    //             // Kirim token otentikasi ke server Laravel
+    //             axios.post('/api/login', { token: idToken })
+    //                 .then((response) => {
+    //                     // Tanggapan dari server Laravel
+    //                     console.log(response.data);
+    //                     // Redirect ke halaman lain atau lakukan sesuatu yang sesuai dengan tanggapan
+    //                 })
+    //                 .catch((error) => {
+    //                     // Tangani kesalahan jika ada
+    //                     console.error('Error:', error);
+    //                 });
+    //         })
+    //         .catch((error) => {
+    //             // Tangani kesalahan jika login gagal
+    //             console.error('Error:', error);
+    //         });
+    // });
       </script>
 </x-guest-layout>

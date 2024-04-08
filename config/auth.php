@@ -42,9 +42,9 @@ return [
         ],
 
         'api' => [
-            'driver' => 'token',
-            'provider' => 'users',
-            'hash' => false,
+            'driver' => 'passport',
+            'provider' => 'firebaseUser',
+            // 'hash' => false,
         ],
     ],
 
@@ -75,7 +75,7 @@ return [
             'driver' => 'firebaseuserprovider',
             'model' => App\Models\User::class,
          ],
-         
+
         // 'users' => [
         //     'driver' => 'database',
         //     'table' => 'users',
