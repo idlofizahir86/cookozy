@@ -28,7 +28,11 @@
                                 {{ __('Nice to see you!') }}
                             </h1>
                         </div>
-                        <form id="login-form" method="POST" action="{{ secure_route('login') }}">
+                        @if (App::environment('production'))
+                            <form id="login-form" method="POST" action="{{ secure_url(route('login')) }}">
+                        @else
+                            <form id="login-form" method="POST" action="{{ route('login') }}">
+                        @endif
                             @csrf
                             <div class="mb-5">
                                 <label class="form-label" for="email">{{ __('E-Mail Address') }}</label>

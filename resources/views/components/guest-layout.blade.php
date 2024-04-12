@@ -14,7 +14,12 @@
     <link href="https://fonts.googleapis.com/css?family=Inter" rel="stylesheet">
 
     <!-- Styles -->
-    <link href="{{ secure_asset('css/app.css') }}" rel="stylesheet">
+    @if (App::environment('production'))
+        <link href="{{ secure_url('css/app.css') }}" rel="stylesheet">
+    @else
+        <link href="{{ url('css/app.css') }}" rel="stylesheet">
+    @endif
+
 </head>
 <body>
     <div id="app">
@@ -24,7 +29,10 @@
     </div>
 
     <!-- Scripts -->
-    <script src="{{ secure_asset('js/app.js') }}" defer></script>
-
+    @if (App::environment('production'))
+        <link href="{{ secure_url('js/app.js') }}" rel="stylesheet">
+    @else
+        <link href="{{ url('js/app.js') }}" rel="stylesheet">
+    @endif
 </body>
 </html>
