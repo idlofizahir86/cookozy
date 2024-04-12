@@ -29,7 +29,7 @@
                             </h1>
                         </div>
                         @if (App::environment('production'))
-                            <form id="login-form" method="POST" action="{{ url('login') }}">
+                            <form id="login-form" method="POST" action="{{ secure_url('login') }}">
                         @else
                             <form id="login-form" method="POST" action="{{ route('login') }}">
                         @endif
