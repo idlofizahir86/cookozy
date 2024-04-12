@@ -28,7 +28,7 @@
                                 {{ __('Nice to see you!') }}
                             </h1>
                         </div>
-                        <form id="login-form" method="POST" action="{{ route('login') }}">
+                        <form id="login-form" method="POST" action="{{ secure_route('login') }}">
                             @csrf
                             <div class="mb-5">
                                 <label class="form-label" for="email">{{ __('E-Mail Address') }}</label>
