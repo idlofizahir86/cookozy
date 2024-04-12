@@ -1,0 +1,15 @@
+{
+  "projects": {
+    "default": "cookozy-if4506"
+  },
+  "targets": {
+    "cookozy-if4506": {
+      "hosting": {
+        "deploy1": [
+          "cookozy-if4506"
+        ]
+      }
+    }
+  },
+  "etags": {}
+}
