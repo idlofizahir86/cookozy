@@ -28,8 +28,12 @@
                                 {{ __('Nice to see you!') }}
                             </h1>
                         </div>
-                        <form id="login-form" method="POST" action="{{ route('login') }}">
-                            @csrf
+                        @if (App::environment('production'))
+                            <form id="login-form" method="POST" action="{{ secure_url('login') }}">
+                        @else
+                            <form id="login-form" method="POST" action="{{ route('login') }}">
+                        @endif
+                        @csrf
                             <div class="mb-5">
                                 <label class="form-label" for="email">{{ __('E-Mail Address') }}</label>
                                 <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
