@@ -23,7 +23,7 @@
                 <div class="row">
                     <div class="col-lg-10 col-md-9 col-xl-6 mx-auto ms-xl-0">
                         <div class="mt-10 mt-lg-5 mb-6 d-flex align-items-center d-lg-block">
-                            <span class="d-inline-block d-lg-block h1 mb-lg-6 me-3">?</span>
+                            <span class="d-inline-block d-lg-block h1 mb-lg-6 me-3">Hi</span>
                             <h1 class="ls-tight font-bolder h2">
                                 {{ __('Nice to see you!') }}
                             </h1>
