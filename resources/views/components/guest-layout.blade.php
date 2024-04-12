@@ -14,8 +14,7 @@
     <link href="https://fonts.googleapis.com/css?family=Inter" rel="stylesheet">
 
     <!-- Styles -->
-    {{-- {{ asset('css/app.css') }} --}}
-    <link href="/css/app.css" rel="stylesheet">
+    <link href="{{ secure_asset('css/app.css') }}" rel="stylesheet">
 </head>
 <body>
     <div id="app">
@@ -25,7 +24,7 @@
     </div>
 
     <!-- Scripts -->
-    <script src="/js/app.js" defer></script>
+    <script src="{{ secure_asset('js/app.js') }}" defer></script>
 
 </body>
 </html>
