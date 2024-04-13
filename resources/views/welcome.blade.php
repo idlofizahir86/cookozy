@@ -50,7 +50,7 @@
             baseUrl = 'https://cookozy-abp-vctfn27zsa-et.a.run.app'; // Ganti dengan URL produksi Anda
         }
 
-        fetch('http://127.0.0.1:8000/api/recipes')
+        fetch('${baseUrl}/api/recipes')
         .then(response => response.json())
         .then(data => {
             loadingIndicator.style.display = 'none'; // Menyembunyikan indikator loading setelah proses selesai
