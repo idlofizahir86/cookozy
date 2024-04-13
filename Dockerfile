@@ -1,19 +1,36 @@
+# Gunakan PHP 8.1 FPM Alpine sebagai base image
 FROM php:8.1-fpm-alpine
 
+# Instal nginx dan wget
 RUN apk add --no-cache nginx wget
 
+# Buat direktori yang diperlukan
 RUN mkdir -p /run/nginx
 
+# Salin konfigurasi nginx
 COPY docker/nginx.conf /etc/nginx/nginx.conf
 
+# Buat direktori app dan salin kode aplikasi
 RUN mkdir -p /app
 COPY . /app
-# COPY ./src /app
 
-RUN sh -c "wget http://getcomposer.org/composer.phar && chmod a+x composer.phar && mv composer.phar /usr/local/bin/composer"
-RUN cd /app && \
-    /usr/local/bin/composer install --no-dev
+# Instal Composer
+RUN wget http://getcomposer.org/composer.phar -O /usr/local/bin/composer && chmod a+x /usr/local/bin/composer
 
-RUN chown -R www-data: /app
+# Instal dependencies menggunakan Composer
+RUN cd /app && /usr/local/bin/composer install --no-dev
 
+# Ganti kepemilikan direktori app
+RUN chown -R www-data:www-data /app
+
+# Instal dependensi untuk ekstensi gRPC
+RUN apk add --no-cache $PHPIZE_DEPS \
+    linux-headers \
+    zlib-dev \
+    g++
+
+# Pasang ekstensi gRPC
+RUN pecl install grpc && docker-php-ext-enable grpc
+
+# Script untuk startup
 CMD sh /app/docker/startup.sh
