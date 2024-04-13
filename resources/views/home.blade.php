@@ -27,15 +27,32 @@
 @extends('layouts.app')
 
 @section('content')
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {{-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> --}}
     <title>Recipe App</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    @if (App::environment('production'))
+    <link href="{{ secure_url('css/welcome.css') }}" rel="stylesheet">
+    <link href="{{ secure_url('css/app.css') }}" rel="stylesheet">
+@else
+    <link href="{{ url('css/welcome.css') }}" rel="stylesheet">
+    <link href="{{ url('css/app.css') }}" rel="stylesheet">
+@endif
 </head>
 <body>
+
+    <div id="loadingIndicator" class="spinner">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+
     <div class="container mt-5">
         <h1 class="mb-4">Recipe App</h1>
         <div id="recipeList"></div>
@@ -43,13 +60,18 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            const loadingIndicator = document.getElementById('loadingIndicator');
             const userId = "{{ Auth::id() }}"; // Mendapatkan user ID yang login dari Laravel
+            const recipeList = document.getElementById('recipeList');
+
+            loadingIndicator.style.display = 'block'; // Menampilkan indikator loading
+
 
             fetch('http://127.0.0.1:8000/api/recipes')
                 .then(response => response.json())
                 .then(data => {
                     const filteredRecipes = data.data.filter(recipe => recipe.user_id === userId);
-                    const recipeList = document.getElementById('recipeList');
+                    loadingIndicator.style.display = 'none'; // Menyembunyikan indikator loading setelah proses selesai
 
                     filteredRecipes.forEach(recipe => {
                         const recipeItem = document.createElement('div');
@@ -165,6 +187,15 @@
     </script>
 </body>
 </html>
+
+
+    @endsection
+
+    @section('footer')
+<div class="container-footer">
+    <p>&copy; 2024 Your Company. All Rights Reserved.</p>
+    <p>Development by Cookozy</p>
+</div>
 @endsection
 
 

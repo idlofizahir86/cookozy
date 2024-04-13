@@ -26,7 +26,9 @@ class RecipeResource extends JsonResource
             'user_name' => $user['nama'] ?? null,
             'description' => $this['description'],
             'image_url' => $this['image_url'],
+            'level' => $this['level'],
+            'type' => $this['type'],
         ];
-        
+
     }
 }

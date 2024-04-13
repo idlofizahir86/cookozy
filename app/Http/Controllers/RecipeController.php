@@ -18,7 +18,7 @@ class RecipeController extends Controller
 
     public function __construct()
     {
-        $credentialPath = base_path('resources\credentials\firebase_credentials.json');
+        $credentialPath = base_path('resources/credentials/firebase_credentials.json');
         $factory = (new Factory)->withServiceAccount($credentialPath);
         $this->firestore = $factory->createFirestore();
 
@@ -123,7 +123,7 @@ public function update(Request $request, $id)
     $uid = Auth::id();
 
     // Konfigurasi Firebase menggunakan credentials
-    $serviceAccount = base_path('resources\credentials\firebase_credentials.json');
+    $serviceAccount = base_path('resources/credentials/firebase_credentials.json');
     $factory = (new Factory)->withServiceAccount($serviceAccount);
     $this->firestore = $factory->createFirestore();
 

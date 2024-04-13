@@ -7,19 +7,39 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ config('app.name', 'Cookozy') }}</title>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
 
     <!-- Styles -->
+    <style>
+        html, body {
+    height: 100%;
+    margin: 0;
+}
+
+#app {
+    /* display: flex;
+    flex-direction: column;
+    min-height: 100vh; */
+}
+
+main {
+    flex-grow: 1; /* Konten utama akan mengisi sisa ruang */
+}
+
+footer {
+    margin-top: auto;
+}
+    </style>
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
 </head>
-<body  style="min-height:90vh;">
+<body  style="min-height:100vh;">
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-surface-secondary shadow-sm">
             <div class="container">
@@ -80,7 +100,10 @@
         </main>
     </div>
 
-     </footer>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 </body>
+<footer>
+    @yield('footer')
+ </footer>
 </html>

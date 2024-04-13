@@ -30,9 +30,9 @@
 
     <!-- Scripts -->
     @if (App::environment('production'))
-        <link href="{{ secure_url('js/app.js') }}" rel="stylesheet">
+        <script src="{{ secure_url('js/app.js') }}" ></script>
     @else
-        <link href="{{ url('js/app.js') }}" rel="stylesheet">
+        <script src="{{ url('js/app.js') }}"></script>
     @endif
 </body>
 </html>
