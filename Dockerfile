@@ -14,7 +14,11 @@ COPY docker/nginx.conf /etc/nginx/nginx.conf
 RUN mkdir -p /app
 COPY . /app
 
+# Salin file kredensial Firebase ke dalam image Docker
 COPY resources/credentials/firebase_credentials.json /app/resources/credentials/firebase_credentials.json
+
+# Atur izin file kredensial
+RUN chmod +r /app/resources/credentials/firebase_credentials.json
 
 # Instal Composer
 RUN wget http://getcomposer.org/composer.phar -O /usr/local/bin/composer && chmod a+x /usr/local/bin/composer
