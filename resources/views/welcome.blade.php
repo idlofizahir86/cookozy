@@ -1,10 +1,11 @@
 @extends('layouts.app')
 
 @section('content')
-{{-- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
-<head> --}}
+<head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>CooKozy</title>
   {{-- <meta name="viewport" content="width=device-width, initial-scale=1"> --}}
   <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css'>
@@ -17,8 +18,8 @@
         <link href="{{ url('css/welcome.css') }}" rel="stylesheet">
         <link href="{{ url('css/app.css') }}" rel="stylesheet">
     @endif
-{{-- </head>
-<body> --}}
+</head>
+<body>
     <!-- isi content -->
     <div id="loadingIndicator" class="spinner">
         <div></div>
@@ -93,19 +94,17 @@
     });
     </script>
 
-  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-  {{-- <script src="script.js"></script> --}}
-  @if (App::environment('production'))
-        <script src="{{ secure_url('js/welcome.js') }}" ></script>
-    @else
-        <script src="{{ url('js/welcome.js') }}"></script>
-    @endif
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    {{-- <script src="script.js"></script> --}}
+    @if (App::environment('production'))
+            <script src="{{ secure_url('js/welcome.js') }}" ></script>
+        @else
+            <script src="{{ url('js/welcome.js') }}"></script>
+        @endif
 
-
-
-{{-- </body> --}}
+</body>
 
 {{-- <style>
     #recipeList {
