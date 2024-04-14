@@ -32,3 +32,5 @@ Route::resource('/home/profile', App\Http\Controllers\Auth\ProfileController::cl
 Route::resource('/password/reset', App\Http\Controllers\Auth\ResetController::class);
 
 Route::resource('/img', App\Http\Controllers\ImageController::class);
+
+URL::forceScheme('https');
