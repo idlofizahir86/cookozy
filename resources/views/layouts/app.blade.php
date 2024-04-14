@@ -34,7 +34,11 @@ footer {
     margin-top: auto;
 }
     </style>
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    @if (App::environment('production'))
+        <link href="{{ secure_url('css/app.css') }}" rel="stylesheet">
+    @else
+        <link href="{{ url('css/app.css') }}" rel="stylesheet">
+    @endif
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
