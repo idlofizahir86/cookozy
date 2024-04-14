@@ -17,7 +17,7 @@ class Recipe extends Model
 
     public function getUserById($userId)
 {
-    $factory = (new Factory)->withServiceAccount(base_path('resources\credentials\firebase_credentials.json'));
+    $factory = (new Factory)->withServiceAccount(base_path('resources/credentials/firebase_credentials.json'));
     $firestore = $factory->createFirestore();
 
     $userDoc = $firestore->database()->collection('users')->document($userId)->snapshot();

@@ -66,8 +66,17 @@
 
             loadingIndicator.style.display = 'block'; // Menampilkan indikator loading
 
+            let baseUrl;
 
-            fetch('http://127.0.0.1:8000/api/recipes')
+            if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+                // Lokal (Development)
+                baseUrl = 'http://localhost:8000';
+            } else {
+                // Produksi
+                baseUrl = 'https://cookozy-pwohh4kjqa-et.a.run.app'; // Ganti dengan URL produksi Anda
+            }
+
+            fetch(`${baseUrl}/api/recipes`)
                 .then(response => response.json())
                 .then(data => {
                     const filteredRecipes = data.data.filter(recipe => recipe.user_id === userId);
