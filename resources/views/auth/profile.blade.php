@@ -1,125 +1,142 @@
 @extends('layouts.app')
+<title>CooKozy | Profile</title>
 
 @section('content')
+    {{-- <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css'>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        @if (App::environment('production'))
+            <link href="{{ secure_url('css/welcome.css') }}" rel="stylesheet">
+            <link href="{{ secure_url('css/app.css') }}" rel="stylesheet">
+        @else
+            <link href="{{ url('css/welcome.css') }}" rel="stylesheet">
+            <link href="{{ url('css/app.css') }}" rel="stylesheet">
+        @endif
+    </head>
 
-  <div class="container">
-    @if(Session::has('message'))
-      <div class="alert alert-info alert-dismissible fade show" role="alert">
-        {{ Session::get('message') }}
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-    @endif
-
-    @if ($errors->any())
-        @foreach ($errors->all() as $error)
-          <div class="alert alert-danger alert-dismissible fade show" role="alert">
-            {{ $error }}
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-        @endforeach
-    @endif
-
-    @if(Session::has('error'))
-      <div class="alert alert-danger alert-dismissible fade show">
-        {{ Session::get('error') }}
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
-      </div>
-    @endif
-    
-    <div class="row justify-content-center">
-      <div class="col-lg-4">
-        <h4>Profile Information</code></h5>
-          <span class="text-justify mb-3" style="padding-top:-3px;">Update your account's profile information and email address.<br><br> When You change your email ,you need to verify your email else the account will be blocked</span>
-        </div>
-
-        <div class="col-lg-8 text-center pt-0">
-          <div class="card py-4 mb-5 mt-md-3 bg-white rounded " style="box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.175)">
-
-            {!! Form::model($user, ['method'=>'PATCH', 'action'=> ['App\Http\Controllers\Auth\ProfileController@update',$user->uid]]) !!}
-            {!! Form::open() !!}
-
-            <div class="form-group px-3">
-              {!! Form::label('displayName', 'Name ',['class'=>'col-12 text-left pl-0']) !!}
-              {!! Form::text('displayName', null, ['class'=>' col-md-8 form-control'])!!}
-
-              {!! Form::label('email', 'Email ',['class'=>'pt-3 col-12 text-left pl-0']) !!}
-              {!! Form::email('email', null, ['class'=>'col-md-8 form-control'])!!}
-
-            </div>
-
-            <div class="form-group row mb-0 mr-4">
-              <div class="col-md-8 offset-md-4 text-right">
-                {!! Form::submit('Save', ['class'=>'btn btn-primary']) !!}
-              </div>
-            </div>
-
-          </div>
-        </div>
-
-      </div>
-      <div class="border-bottom border-grey"></div>
-
-      <div class="row justify-content-center pt-5">
-        <div class="col-lg-4">
-          <h4>Update Password</code></h5>
-            <span class="text-justify" style="padding-top:-3px;">Ensure your account is using a long, random password to stay secure.</span>
-          </div>
-
-          <div class="col-lg-8 text-center pt-0">
-            <div class="card py-4 mb-5 mt-md-3 bg-white rounded" style="box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.175)">
-
-              <div class="form-group px-3">
-                {!! Form::label('new_password', 'New Password:',['class'=>'col-12 text-left pl-0']) !!}
-                {!! Form::password('new_password', ['class'=>'col-md-8 form-control'])!!}
-              </div>
-
-              <div class="form-group px-3">
-                {!! Form::label('new_confirm_password', 'Confirm Password:',['class'=>'col-12 text-left pl-0']) !!}
-                {!! Form::password('new_confirm_password', ['class'=>'col-md-8 form-control'])!!}
-              </div>
-
-              <div class="form-group row mb-0 mr-4">
-                <div class="col-md-8 offset-md-4 text-right">
-                  {!! Form::submit('Save', ['class'=>'btn btn-primary']) !!}
+    <body>
+        !-- isi content -->
+        <!-- sampul/cover atas  -->
+        <div class="post-wrapper">
+            <div id="profile-upper">
+                <div id="profile-banner-image">
+                    <img src="https://imagizer.imageshack.com/img921/9628/VIaL8H.jpg" alt="Banner image">
                 </div>
-              </div>
-              {!! Form::close() !!}
+                <div id="profile-d">
+                    <div id="profile-pic">
+                    <img src="https://i.insider.com/51dd6b0ceab8eaa223000013" alt="Profile picture">
+                    </div>
+                    <div id="author">Brithany</div>
+                </div>
             </div>
-          </div>
-
+        <!-- tempat postingan -->
+            <div id="main-content">
+            <div class="mc">
+                <div class="mc" id="m-c-s">
+                <span>What's on your mind?</span>
+                <a href="/post/postdu.html"><img src="/Day 12  Recipe-card - Nothing4us/dist/plus.svg" alt="Add new post"></a>
+                </div>
+            </div>
+            </div>
         </div>
 
-        <div class="border-bottom border-grey"></div>
-
-        <div class="row justify-content-center pt-5">
-          <div class="col-lg-4">
-            <h4>Delete Account</code></h5>
-              <span class="text-justify" style="padding-top:-3px;">Permanently delete your account.</span>
-            </div>
-
-            <div class="col-lg-8 pt-0">
-              <div class="card py-4 mb-5 mt-md-3 bg-white rounded" style="box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.175)">
-                <div class="text-left px-3">
-                  Once your account is deleted, all of its resources and data will be permanently deleted. Before deleting your account, please download any data or information that you wish to retain.
+        <!-- semua postingan  -->
+        <!-- Rsp 1 -->
+        <div class="post-wrapper">
+                <div id="profile-pic-posting">
+                <img id="img-pic" src="https://i.insider.com/51dd6b0ceab8eaa223000013" ><a class="post-author" href="profil.html">Brithany</a>
                 </div>
 
-                {!! Form::open(['method'=>'DELETE', 'action' =>['App\Http\Controllers\Auth\ProfileController@destroy',$user->uid]]) !!}
-                {!! Form::open() !!}
-                <div class="form-group row mb-0 mr-4 pt-4 px-3">
-                  <div class="col-md-8 offset-l-4 text-left">
-                    {!! Form::submit('Delete Account', ['class'=>'btn btn-danger pl-3']) !!}
-                  </div>
+
+            <div class="post">
+            <div class="post-content">
+                <h2 id="produk" class="font-bold text-2xl">Roti Panggang Alpukat, dan Telur Rebus</h2>
+                <div id="tag-lines">
+                <span class="tag">Breakfast</span>
+                <span class="tag">Easy</span>
                 </div>
-                {!! Form::close() !!}
-              </div>
+                <p class="text-sm text-[#1c0708]/60">Roti panggang dengan alpukat dan telur rebus.</p>
+                <div class="panel-heading active">
+                <h4 class="see-more">
+                    <a class="btn-rcp" href="/Day 12  Recipe-card - Nothing4us/dist/index.html">See More Recipe</a>
+                </h4>
+                </div>
             </div>
-
-          </div>
-
+            <div class="post-image">
+                <img alt="" class="recipe_img" src="/Day 12  Recipe-card - Nothing4us/dist/avcToast.jpg">
+            </div>
+            </div>
         </div>
 
-      @endsection
+
+        <!-- Rsp 2 -->
+        <div class="post-wrapper">
+            <div id="profile-pic-posting">
+                <img id="img-pic" src="https://i.insider.com/51dd6b0ceab8eaa223000013" ><a class="post-author" href="profil.html">Brithany</a>
+                </div>
+
+            <div class="post">
+            <div class="post-content">
+                <h2 class="font-bold text-2xl">Tahu Cabe Garam </h2>
+                <div id="tag-lines">
+                <span class="tag" href="#">Lunch</span>
+                <span class="tag" href="#">Easy</span>
+                </div>
+                <p id="produk" class="text-sm text-[#1c0708]/60">Tahu yang lembut berpadu dengan rasa pedas dari cabai dan asin dari garam.</p>
+                <div class="panel-heading active">
+                <h4 class="see-more">
+                    <a class="btn-rcp" href="/Day 12  Recipe-card - Nothing4us/dist/index2.html">See More Recipe</a>
+                </h4>
+                </div>
+
+            </div>
+            <div class="post-image">
+                <img alt="" class="recipe_img" src="/Day 12  Recipe-card - Nothing4us/dist/thcbGrm.jpg">
+            </div>
+            </div>
+        </div>
+
+        <!-- Rsp 3 -->
+        <div class="post-wrapper">
+            <div id="profile-pic-posting">
+                <img id="img-pic" src="https://i.insider.com/51dd6b0ceab8eaa223000013" ><a class="post-author" href="profil.html">Brithany</a>
+                </div>
+
+            <div class="post">
+            <div class="post-content">
+                <h2 id="produk" class="font-bold text-2xl">Telor Kecap</h2>
+                <div id="tag-lines">
+                <span class="tag">Breakfast</span> <span class="tag">Easy</span>
+                </div>
+                <p class="text-sm text-[#1c0708]/60">Telur ceplok kecap dengan telurnya setengah matang direndam saus kecap yang legit gurih.</p>
+                <div class="panel-heading active">
+                <h4 class="see-more">
+                    <a class="btn-rcp" href="/Day 12  Recipe-card - Nothing4us/dist/index3.html">See More Recipe</a>
+                </h4>
+                </div>
+            </div>
+            <div class="post-image">
+                <img alt="" class="recipe_img" src="/Day 12  Recipe-card - Nothing4us/dist/tlrKcp.jpg">
+            </div>
+            </div>
+        </div>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        @if (App::environment('production'))
+            <script src="{{ secure_url('js/welcome.js') }}" ></script>
+        @else
+            <script src="{{ url('js/welcome.js') }}"></script>
+        @endif
+    </body> --}}
+@endsection
+
+@section('footer')
+<div class="container-footer">
+    <p>&copy; 2024 Your Company. All Rights Reserved.</p>
+    <p>Development by Cookozy</p>
+</div>
+@endsection

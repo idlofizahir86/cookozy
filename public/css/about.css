@@ -1,0 +1,166 @@
+* {
+    margin: 0;
+    padding: 0;
+  }
+  
+  body {
+    background-color: #bde3f9 !important;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    margin: 0;
+  }
+  
+  .content-detail h1, .content-team h1 {
+    font-family: "Franklin Gothic Medium";
+    color: #000000;
+    font-size: 70px;
+    font-weight: lighter;
+    letter-spacing: -5px;
+    padding: 50px 0px 0px 0px;
+    z-index: 999;
+    margin: 2%;
+
+  }
+  
+  .content-detail p {
+    font-family: "Franklin Gothic Medium";
+    color: rgb(0, 0, 0);
+    font-size: 20px;
+    font-weight: 100%;
+    z-index: 999;
+    /* text-align: center !important; */
+    justify-content: center;
+    margin-left: 5%;
+    margin-right: 5%;
+
+    margin-top: 2%;
+    margin-bottom: 2%;
+
+    
+    
+
+  }
+
+  .span-us{
+    color: rgb(169, 115, 166);
+    font-family: "Franklin Gothic Medium";
+    font-size: 50px;
+    font-weight: 100%;
+    z-index: 999;
+  }
+
+  h3{
+    color: rgb(5, 123, 141);
+    font-family: "Franklin Gothic Medium";
+    font-size: 70px;
+    font-weight: 100%;
+    z-index: 999;
+    margin: 2%;
+  }
+
+  h4{
+    color:rgb(180, 137, 178);
+    font-family: "Franklin Gothic Medium";
+    font-size: 70px;
+    font-weight: 100%;
+    z-index: 999;
+    margin: 2%;
+
+  }
+
+  .span-grow{
+    color: rgb(243, 119, 169);
+    font-family: "Franklin Gothic Medium";
+    font-size: 30px;
+    font-weight: 100%;
+    z-index: 999;
+  }
+  
+  .first-section .images-wrapper {
+    position: absolute;
+  }
+  
+  .section_1_01 {
+    position: absolute;
+    top: 600px;
+    right: -400px;
+    transform: scale(1.section_1_06);
+  }
+  
+
+  .section_1_03 {
+    position: absolute;
+    top: 30px;
+    right: -500px;
+  }
+  
+  .section_1_04 {
+    position: absolute;
+    top: 400px;
+    right: -450px;
+    transform: scale(1.4);
+
+
+  }
+
+  .section_1_05 {
+    position: absolute;
+    top: 200px;
+    right: -70px;
+    transform: scale(1.6);
+
+
+
+  }
+
+  .section_1_06 {
+    position: absolute;
+    top: 400px;
+    right: -990px;
+    transform: scale(1.6);
+
+  }
+.section_1_07 {
+    position: absolute;
+    top: 110px;
+    right: -900px;
+    transform: scale(1.6);
+
+  }
+
+.section_1_08 {
+    position: center!important;
+    top: 200px;
+    right: -1300px;
+    transform: scale(1.6);
+
+  }
+  
+  .content-wrapper {
+    display: flex;
+    min-height: 100vh;
+    padding-top: 50px;
+    flex: 1;
+    margin-bottom: 20px!important;
+  }
+  
+/* buat team us */
+
+.content-team {
+    text-align: center; /* Pusatkan teks */
+    margin-top: 20px; /* Jarak dari atas */
+}
+
+.allmem {
+    display: flex; /* Gunakan flexbox */
+    justify-content: center; /* Pusatkan secara horizontal */
+    gap: 20px; /* Jarak antara gambar */
+}
+
+.allmem img {
+    width: 100px; /* Ukuran gambar */
+    height: 100px;
+    object-fit: cover; /* Atur ukuran gambar tanpa merubah proporsi */
+    border-radius: 50%; /* Membuat gambar bundar */
+}

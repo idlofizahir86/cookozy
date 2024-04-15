@@ -1,9 +1,13 @@
+<head>
+    <title>CooKozy | Register</title>
+</head>
+
 <x-guest-layout>
     <div class="px-5 py-5 p-lg-0 bg-surface-secondary">
         <div class="d-flex justify-content-center">
             <div class="col-lg-5 col-xl-4 p-12 p-xl-20 position-fixed start-0 top-0 h-screen overflow-y-hidden bg-primary d-none d-lg-flex flex-column">
                 <!-- Logo -->
-                <a class="d-block" href="#">
+                <a class="d-block" href="{{ url('/') }}">
                     <img src="https://firebasestorage.googleapis.com/v0/b/cookozy-if4506.appspot.com/o/Assets%2FCookozy-svg.svg?alt=media&token=7a4164c2-2734-4928-8363-37af32ca3656" class="h-10" alt="...">
                 </a>
                 <!-- Title -->
@@ -28,10 +32,10 @@
                             </h1>
                         </div>
 
-                        @if(Session::has('error'))              
+                        @if(Session::has('error'))
                         <div class="alert alert-danger alert-dismissible fade show">
                             {{ Session::get('error') }}
-                            
+
                         </div>
                         @endif
 
@@ -73,13 +77,13 @@
                             </div>
                             <div>
                                 <button type="submit" class="btn btn-primary w-full">
-                                    {{ __('Sign up') }}
+                                    {{ __('Register') }}
                                 </button>
                             </div>
                         </form>
                         <div class="my-6">
                             <small>{{ __('Already have an account?') }}</small>
-                            <a href="{{ route('login') }}" class="text-warning text-sm font-semibold">{{ __('Sign in') }}</a>
+                            <a href="{{ route('login') }}" class="text-warning text-sm font-semibold">{{ __('Login') }}</a>
                         </div>
                     </div>
                 </div>

@@ -1,3 +1,6 @@
+<head>
+    <title>CooKozy | Login</title>
+</head>
 
 <x-guest-layout>
     <div class="px-5 py-5 p-lg-0 bg-surface-secondary">
@@ -69,13 +72,13 @@
                             </div>
                             <div>
                                 <button id="submit" type="submit" class="btn btn-primary w-full">
-                                    {{ __('Sign in') }}
+                                    {{ __('Login') }}
                                 </button>
                             </div>
                         </form>
                         <div class="my-6">
                             <small>{{ __('Don\'t have an account') }}</small>
-                            <a href="{{ route('register') }}" class="text-warning text-sm font-semibold">{{ __('Sign up') }}</a>
+                            <a href="{{ route('register') }}" class="text-warning text-sm font-semibold">{{ __('Register') }}</a>
                         </div>
                     </div>
                 </div>

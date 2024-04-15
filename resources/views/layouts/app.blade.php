@@ -64,6 +64,9 @@ footer {
                     <ul class="navbar-nav ml-auto">
                         <!-- Authentication Links -->
                         @guest
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ url('/about') }}">{{ __('About') }}</a>
+                            </li>
                             @if (Route::has('login'))
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
@@ -77,9 +80,17 @@ footer {
                             @endif
                         @else
 
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" href="{{ url('/profile') }}">{{ __('Profile') }}</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" href="{{ url('/account') }}">{{ __('Account') }}</a>
+                        </li>
+
                           <li class="nav-item">
-                              <a class="nav-link text-dark" href="{{ url('/home/profile') }}">{{ __('Profile') }}</a>
-                          </li>
+                            <a class="nav-link" href="{{ url('/about') }}">{{ __('About') }}</a>
+                        </li>
 
                           <li class="nav-item">
                             <a class="nav-link text-dark" href="{{ route('logout') }}"
