@@ -2,7 +2,7 @@
 <title>CooKozy | Profile</title>
 
 @section('content')
-    {{-- <head>
+    <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css'>
@@ -17,111 +17,53 @@
     </head>
 
     <body>
-        !-- isi content -->
+
+        <!-- isi content -->
         <!-- sampul/cover atas  -->
         <div class="post-wrapper">
             <div id="profile-upper">
                 <div id="profile-banner-image">
-                    <img src="https://imagizer.imageshack.com/img921/9628/VIaL8H.jpg" alt="Banner image">
+                    <img src="https://firebasestorage.googleapis.com/v0/b/cookozy-if4506.appspot.com/o/Assets%2FBanner-profile.png?alt=media&token=942378fe-27c6-4861-a85c-7fee004acd07" alt="Banner image">
                 </div>
                 <div id="profile-d">
                     <div id="profile-pic">
-                    <img src="https://i.insider.com/51dd6b0ceab8eaa223000013" alt="Profile picture">
+                    <img id="profile-image" src="https://i.insider.com/51dd6b0ceab8eaa223000013" alt="Profile picture">
                     </div>
-                    <div id="author">Brithany</div>
+                    <div id="author">Loading..</div>
                 </div>
             </div>
+        </div>
+
         <!-- tempat postingan -->
-            <div id="main-content">
-            <div class="mc">
-                <div class="mc" id="m-c-s">
-                <span>What's on your mind?</span>
-                <a href="/post/postdu.html"><img src="/Day 12  Recipe-card - Nothing4us/dist/plus.svg" alt="Add new post"></a>
-                </div>
-            </div>
-            </div>
-        </div>
+        <a href="/post/postdu.html" class="float">
+            <i class="fa fa-plus my-float"></i>
+        </a>
 
-        <!-- semua postingan  -->
-        <!-- Rsp 1 -->
-        <div class="post-wrapper">
-                <div id="profile-pic-posting">
-                <img id="img-pic" src="https://i.insider.com/51dd6b0ceab8eaa223000013" ><a class="post-author" href="profil.html">Brithany</a>
-                </div>
+        <script>
+            document.addEventListener('DOMContentLoaded', async () => {
+            const userId = "{{ Auth::id() }}"; // Mendapatkan user ID yang login dari Laravel
+            let baseUrl;
 
+            if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+                // Lokal (Development)
+                baseUrl = 'http://localhost:8000';
+            } else {
+                // Produksi
+                baseUrl = 'https://cookozy-pwohh4kjqa-et.a.run.app'; // Ganti dengan URL produksi Anda
+            }
+            try {
+                const response = await fetch(`${baseUrl}/api/users/${userId}`);
+                const userData = await response.json();
 
-            <div class="post">
-            <div class="post-content">
-                <h2 id="produk" class="font-bold text-2xl">Roti Panggang Alpukat, dan Telur Rebus</h2>
-                <div id="tag-lines">
-                <span class="tag">Breakfast</span>
-                <span class="tag">Easy</span>
-                </div>
-                <p class="text-sm text-[#1c0708]/60">Roti panggang dengan alpukat dan telur rebus.</p>
-                <div class="panel-heading active">
-                <h4 class="see-more">
-                    <a class="btn-rcp" href="/Day 12  Recipe-card - Nothing4us/dist/index.html">See More Recipe</a>
-                </h4>
-                </div>
-            </div>
-            <div class="post-image">
-                <img alt="" class="recipe_img" src="/Day 12  Recipe-card - Nothing4us/dist/avcToast.jpg">
-            </div>
-            </div>
-        </div>
+                // Menampilkan data pengguna di halaman web
+                document.getElementById('author').textContent = userData.data.nama;
+                document.getElementById('profile-image').src = userData.data.imageUrl;
+            } catch (error) {
+                console.error('Error fetching user data:', error);
+            }
+        });
+        </script>
 
-
-        <!-- Rsp 2 -->
-        <div class="post-wrapper">
-            <div id="profile-pic-posting">
-                <img id="img-pic" src="https://i.insider.com/51dd6b0ceab8eaa223000013" ><a class="post-author" href="profil.html">Brithany</a>
-                </div>
-
-            <div class="post">
-            <div class="post-content">
-                <h2 class="font-bold text-2xl">Tahu Cabe Garam </h2>
-                <div id="tag-lines">
-                <span class="tag" href="#">Lunch</span>
-                <span class="tag" href="#">Easy</span>
-                </div>
-                <p id="produk" class="text-sm text-[#1c0708]/60">Tahu yang lembut berpadu dengan rasa pedas dari cabai dan asin dari garam.</p>
-                <div class="panel-heading active">
-                <h4 class="see-more">
-                    <a class="btn-rcp" href="/Day 12  Recipe-card - Nothing4us/dist/index2.html">See More Recipe</a>
-                </h4>
-                </div>
-
-            </div>
-            <div class="post-image">
-                <img alt="" class="recipe_img" src="/Day 12  Recipe-card - Nothing4us/dist/thcbGrm.jpg">
-            </div>
-            </div>
-        </div>
-
-        <!-- Rsp 3 -->
-        <div class="post-wrapper">
-            <div id="profile-pic-posting">
-                <img id="img-pic" src="https://i.insider.com/51dd6b0ceab8eaa223000013" ><a class="post-author" href="profil.html">Brithany</a>
-                </div>
-
-            <div class="post">
-            <div class="post-content">
-                <h2 id="produk" class="font-bold text-2xl">Telor Kecap</h2>
-                <div id="tag-lines">
-                <span class="tag">Breakfast</span> <span class="tag">Easy</span>
-                </div>
-                <p class="text-sm text-[#1c0708]/60">Telur ceplok kecap dengan telurnya setengah matang direndam saus kecap yang legit gurih.</p>
-                <div class="panel-heading active">
-                <h4 class="see-more">
-                    <a class="btn-rcp" href="/Day 12  Recipe-card - Nothing4us/dist/index3.html">See More Recipe</a>
-                </h4>
-                </div>
-            </div>
-            <div class="post-image">
-                <img alt="" class="recipe_img" src="/Day 12  Recipe-card - Nothing4us/dist/tlrKcp.jpg">
-            </div>
-            </div>
-        </div>
 
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
@@ -131,7 +73,157 @@
         @else
             <script src="{{ url('js/welcome.js') }}"></script>
         @endif
-    </body> --}}
+    </body>
+
+    <div id="loadingIndicator" class="spinner">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+
+    <div class="container mt-5">
+        <h1 class="mb-4">Recipe Yang Telah dibuat</h1>
+        <div id="recipeList"></div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const loadingIndicator = document.getElementById('loadingIndicator');
+            const userId = "{{ Auth::id() }}"; // Mendapatkan user ID yang login dari Laravel
+            const recipeList = document.getElementById('recipeList');
+
+            loadingIndicator.style.display = 'block'; // Menampilkan indikator loading
+
+            let baseUrl;
+
+            if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+                // Lokal (Development)
+                baseUrl = 'http://localhost:8000';
+            } else {
+                // Produksi
+                baseUrl = 'https://cookozy-pwohh4kjqa-et.a.run.app'; // Ganti dengan URL produksi Anda
+            }
+
+            fetch(`${baseUrl}/api/recipes`)
+                .then(response => response.json())
+                .then(data => {
+                    const filteredRecipes = data.data.filter(recipe => recipe.user_id === userId);
+                    loadingIndicator.style.display = 'none'; // Menyembunyikan indikator loading setelah proses selesai
+
+                    filteredRecipes.forEach(recipe => {
+                        const recipeItem = document.createElement('div');
+                        recipeItem.classList.add('card', 'mb-3');
+                        recipeItem.innerHTML = `
+                            <div class="card-body">
+                                <h5 class="card-title">${recipe.title}</h5>
+                                <p class="card-text">${recipe.description}</p>
+                                <p class="card-text">Author: ${recipe.user_name}</p>
+
+                                <form class="edit-form d-none">
+                                    <div class="form-group">
+                                        <label for="editTitle_${recipe.id}">Title</label>
+                                        <input type="text" class="form-control" id="editTitle_${recipe.id}" value="${recipe.title}">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="editDescription_${recipe.id}">Description</label>
+                                        <textarea class="form-control" id="editDescription_${recipe.id}" rows="3">${recipe.description}</textarea>
+                                    </div>
+                                    <button type="button" class="btn btn-primary btn-sm save-btn" data-id="${recipe.id}">Save</button>
+                                    <br>
+                                    <br>
+                                    </form>
+
+                                <button type="button" class="btn btn-secondary btn-sm edit-btn">Edit</button>
+                                <button type="button" class="btn btn-danger btn-sm delete-btn text-white" data-id="${recipe.id}" data-title="${recipe.title}">Delete</button>
+                            </div>
+                        `;
+                        recipeList.appendChild(recipeItem);
+                    });
+
+                    const editButtons = document.querySelectorAll('.edit-btn');
+                    editButtons.forEach(button => {
+                        button.addEventListener('click', () => {
+                            const cardBody = button.parentNode;
+                            const editForm = cardBody.querySelector('.edit-form');
+                            if (editForm.classList.contains('d-none')) {
+                                // Jika form sedang ditutup, maka buka
+                                editForm.classList.remove('d-none');
+                            } else {
+                                // Jika form sedang terbuka, maka tutup
+                                editForm.classList.add('d-none');
+                            }
+                        });
+                    });
+
+                    const saveButtons = document.querySelectorAll('.save-btn');
+                    saveButtons.forEach(button => {
+                        button.addEventListener('click', () => {
+                            const recipeId = button.dataset.id;
+                            const editTitle = document.querySelector(`#editTitle_${recipeId}`).value;
+                            const editDescription = document.querySelector(`#editDescription_${recipeId}`).value;
+
+                            fetch(`${baseUrl}/api/recipes/${recipeId}`, {
+                                method: 'PUT',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                                },
+                                body: JSON.stringify({
+                                    title: editTitle,
+                                    description: editDescription,
+                                }),
+                            })
+                            .then(response => {
+                                if (!response.ok) {
+                                    throw new Error('Failed to update recipe');
+                                }
+                                // Handle jika berhasil diperbarui
+                                const editForm = button.closest('.edit-form');
+                                editForm.classList.add('d-none');
+
+                                // Perbarui halaman
+                                location.reload();
+                            })
+                            .catch(error => {
+                                console.error('Error updating recipe:', error);
+                            });
+                        });
+                    });
+
+                    const deleteButtons = document.querySelectorAll('.delete-btn');
+                    deleteButtons.forEach(button => {
+                        button.addEventListener('click', () => {
+                            const recipeId = button.dataset.id;
+                            const recipeTitle = button.dataset.title;
+                            const isConfirmed = confirm(`Apakah anda yakin mengahupus resep "${recipeTitle}"?`);
+                            if (isConfirmed) {
+                                // Lakukan penghapusan menggunakan fetch atau metode lainnya
+                                fetch(`/api/recipes/delete/${recipeId}`, {
+                                    method: 'DELETE',
+                                    headers: {
+                                        'Content-Type': 'application/json',
+                                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                                    },
+                                })
+                                .then(response => {
+                                    if (!response.ok) {
+                                        throw new Error('Failed to delete recipe');
+                                    }
+                                    // Handle jika berhasil dihapus
+                                    location.reload();
+                                })
+                                .catch(error => {
+                                    console.error('Error deleting recipe:', error);
+                                });
+                            }
+                        });
+                    });
+                })
+                .catch(error => console.error('Error:', error));
+        });
+    </script>
 @endsection
 
 @section('footer')

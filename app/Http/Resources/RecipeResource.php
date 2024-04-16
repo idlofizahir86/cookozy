@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+
 use App\Models\Recipe;
 
 class RecipeResource extends JsonResource

@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RecipeController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\CheckAuthentication;
 
@@ -24,9 +25,13 @@ Route::get('/recipes/{id}/edit', [RecipeController::class, 'edit'])->name('recip
 Route::put('/recipes/{id}', [RecipeController::class, 'update'])->name('recipes.update');
 Route::delete('/recipes/delete/{id}',[RecipeController::class, 'destroy'])->name('recipes.delete');
 
+Route::get('/users', [UserController::class, 'index'])->name('users.index');
+Route::get('/users/{id}', [UserController::class, 'show'])->name('users.show');
 
 Route::post('/login',[LoginController::class, 'login']);
 Route::get('/user',[LoginController::class, 'userInfo'])->middleware("auth");
+
+
 
 // Route::middleware('auth:api')->group(function () {
 //     // Route::get('/user', function (Request $request) {
