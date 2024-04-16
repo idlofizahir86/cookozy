@@ -6,6 +6,7 @@ use App\Http\Controllers\RecipeController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\CheckAuthentication;
+use App\Http\Controllers\ImageController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,6 +31,9 @@ Route::get('/users/{id}', [UserController::class, 'show'])->name('users.show');
 
 Route::post('/login',[LoginController::class, 'login']);
 Route::get('/user',[LoginController::class, 'userInfo'])->middleware("auth");
+
+Route::post('/upload-image', [ImageController::class, 'store'])->name('image.store');
+Route::delete('/delete-image', [ImageController::class, 'deleteImage'])->name('image.delete');
 
 
 

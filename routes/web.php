@@ -35,6 +35,8 @@ Route::resource('/account', App\Http\Controllers\Auth\AccountController::class)-
 
 Route::resource('/profile', App\Http\Controllers\Auth\ProfileController::class)->middleware('user','fireauth');
 
+Route::resource('/post', App\Http\Controllers\Auth\PostController::class)->middleware('user','fireauth');
+
 Route::resource('/password/reset', App\Http\Controllers\Auth\ResetController::class);
 
 Route::resource('/img', App\Http\Controllers\ImageController::class);

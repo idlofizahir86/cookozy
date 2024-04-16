@@ -56,6 +56,13 @@ return [
             'throw' => false,
         ],
 
+        'firebase' => [
+            'driver' => 's3',
+            'url' => env('FIREBASE_STORAGE_URL'),
+            'root' => '',
+            'visibility' => 'public',
+        ],
+
     ],
 
     /*
@@ -72,5 +79,8 @@ return [
     'links' => [
         public_path('storage') => storage_path('app/public'),
     ],
+
+
+
 
 ];

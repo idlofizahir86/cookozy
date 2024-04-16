@@ -75,17 +75,19 @@ class RecipeController extends Controller
         }
 
         // Ambil UID pengguna yang login
-        $uid = $request['user_id'] = Auth::id(); // Menggunakan Auth dari Laravel untuk mendapatkan UID
+        // $uid = $request['user_id'] = Auth::id(); // Menggunakan Auth dari Laravel untuk mendapatkan UID
 
         // Persiapkan data untuk dokumen baru
         $data = [
             'title' => $request->input('title'),
-            'user_id' => $uid,
+            'user_id' => $request->input('user_id'),
             'description' => $request->input('description'),
             'timestamp' => Carbon::now()->toDateTimeString(), // Timestamp saat ini
             'image_url' => $request->input('image_url'),
             'ingredients' => $request->input('ingredients'),
             'steps' => $request->input('steps'),
+            'type' => $request->input('type'),
+            'level' => $request->input('level'),
             'verified' => false
         ];
 

@@ -20,7 +20,7 @@
 
         <!-- isi content -->
         <!-- sampul/cover atas  -->
-        <div class="post-wrapper">
+        <div class="banner-wrapper">
             <div id="profile-upper">
                 <div id="profile-banner-image">
                     <img src="https://firebasestorage.googleapis.com/v0/b/cookozy-if4506.appspot.com/o/Assets%2FBanner-profile.png?alt=media&token=942378fe-27c6-4861-a85c-7fee004acd07" alt="Banner image">
@@ -35,7 +35,7 @@
         </div>
 
         <!-- tempat postingan -->
-        <a href="/post/postdu.html" class="float">
+        <a href="{{ url('/post') }}" class="float">
             <i class="fa fa-plus my-float"></i>
         </a>
 

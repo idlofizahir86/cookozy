@@ -41,13 +41,92 @@ class ImageController extends Controller
         //
     }
 
+    public function store(Request $request)
+{
+    $request->validate([
+        'image' => 'required|image|mimes:jpeg,png,jpg,gif',
+    ]);
+
+    $image = $request->file('image');
+
+    // Simpan gambar sementara di folder lokal Laravel
+    $localFolder = public_path('firebase-temp-uploads') . '/';
+    $extension = $image->getClientOriginalExtension();
+    $fileName = time() . '.' . $extension;
+    $image->move($localFolder, $fileName);
+
+    // Unggah gambar ke Firebase Storage
+    $firebaseStoragePath = 'recipes/';
+    $uploadedFile = fopen($localFolder . $fileName, 'r');
+    app('firebase.storage')->getBucket()->upload($uploadedFile, ['name' => $firebaseStoragePath . $fileName]);
+
+    // Dapatkan URL gambar dari Firebase Storage
+    $firebaseStorageUrl = "https://firebasestorage.googleapis.com/v0/b/cookozy-if4506.appspot.com/o/recipes%2F" . $fileName;
+
+    // Lakukan GET untuk mendapatkan downloadTokens
+    $curl = curl_init();
+
+    curl_setopt_array($curl, array(
+        CURLOPT_URL => $firebaseStorageUrl,
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_CUSTOMREQUEST => "GET",
+    ));
+
+    $response = curl_exec($curl);
+    $err = curl_error($curl);
+
+    curl_close($curl);
+
+    if ($err) {
+        // Jika ada kesalahan saat melakukan permintaan GET
+        return response()->json(['error' => 'Failed to retrieve downloadTokens'], 500);
+    } else {
+        // Ubah respons menjadi array
+        $responseData = json_decode($response, true);
+
+        // Jika respons berisi downloadTokens
+        if (isset($responseData['downloadTokens'])) {
+            $downloadToken = $responseData['downloadTokens'];
+
+            // Gabungkan token unduhan ke dalam URL gambar
+            $imageUrlToken = $firebaseStorageUrl . "?alt=media&token=" . $downloadToken;
+
+            // Hapus file gambar sementara dari folder lokal Laravel
+            unlink($localFolder . $fileName);
+
+            // Berikan respons JSON dengan URL gambar yang telah diperbarui
+            return response()->json(['image_url' => $imageUrlToken], 200);
+        } else {
+            // Jika respons tidak berisi downloadTokens
+            return response()->json(['error' => 'Failed to retrieve downloadTokens'], 500);
+        }
+    }
+}
+
+    public function deleteImage(Request $request)
+    {
+        $request->validate([
+            'image_url' => 'required|url',
+        ]);
+
+        $imageUrl = $request->input('image_url');
+
+        // Mendapatkan nama file dari URL gambar
+        $fileName = basename($imageUrl);
+
+        // Hapus file dari Firebase Storage
+        Storage::disk('firebase')->delete('recipes/' . $fileName);
+
+        return response()->json(['message' => 'Image deleted successfully'], 200);
+    }
+
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function storeImgStatic(Request $request)
     {
         //
         $request->validate([
