@@ -63,11 +63,11 @@ class RecipeController extends Controller
     {
         $baseUrl = '';
 
-        // Menginisialisasi $idRecipe dengan nilai yang diterima
         $idRecipe = $id;
 
-        // Memeriksa apakah $idRecipe tidak kosong
-        if (empty($idRecipe)) {
+        if (!empty($idRecipe)){
+            $idRecipe = $id;
+        } else {
             $idRecipe = "";
         }
 
@@ -79,31 +79,35 @@ class RecipeController extends Controller
             $baseUrl = 'https://cookozy-pwohh4kjqa-et.a.run.app'; // Ganti dengan URL produksi Anda
         }
 
-        // Menggunakan kutip ganda agar variabel dievaluasi
         $uri = "{$baseUrl}/api/recipes/{$idRecipe}";
 
-        // Lakukan permintaan ke API untuk mendapatkan data resep berdasarkan ID
-        $request = Request::create($uri, 'GET');
-        $response = app()->handle($request);
-        // dd($response);
+        if ($uri !== null) {
+            // Lakukan permintaan ke API untuk mendapatkan data resep berdasarkan ID
+            $request = Request::create($uri, 'GET');
+            $response = app()->handle($request);
 
-        // Memeriksa apakah permintaan berhasil
-        if ($response->getStatusCode() === 200) {
-            // Ubah respons ke JSON
-            $jsonContent = $response->getContent();
+            // Memeriksa apakah permintaan berhasil
+            if ($response->getStatusCode() === 200) {
+                // Ubah respons ke JSON
+                $jsonContent = $response->getContent();
 
-            // Decode JSON ke dalam array
-            $data = json_decode($jsonContent, true);
+                // Decode JSON ke dalam array
+                $data = json_decode($jsonContent, true);
 
-            // Ambil data resep dari response JSON
-            $recipe = $data['data'];
-            // Tampilkan view dengan data resep
-            return view('detailRecipe', compact('recipe'));
+                // Ambil data resep dari response JSON
+                $recipe = $data['data'];
+                // Tampilkan view dengan data resep
+                return view('detailRecipe', compact('recipe'));
+            } else {
+                // Jika permintaan gagal, tampilkan halaman error
+                abort(404);
+            }
         } else {
-            // Jika permintaan gagal, tampilkan halaman error
+            // Penanganan jika $uri null
             abort(404);
         }
     }
+
 
 
     public function store(Request $request) {
