@@ -42,7 +42,7 @@
         <div></div>
     </div>
 
-    
+
 
     <div class="container">
         <div id="carouselContainer"></div>
@@ -94,9 +94,10 @@
                 <p class="card-text">${recipe.description}</p>
             </div>
             <div class="card-body">
-                <a href="/recipes/detail/${recipe.id}" class="btn btn-primary" style="position: absolute; bottom: 15px;">See More Recipe <i class="fas fa-chevron-right"></i></a>
+                <a href="#" class="btn btn-primary" style="position: absolute; bottom: 15px;">See More Recipe <i class="fas fa-chevron-right"></i></a>
             </div>`;
             recipeList.appendChild(recipeItem);
+            // /recipes/detail/${recipe.id}
         });
 
         // Tambahkan kode carousel ke dalam blok ini
