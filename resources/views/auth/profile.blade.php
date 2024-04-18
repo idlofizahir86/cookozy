@@ -135,27 +135,37 @@
                                     <br>
                                     </form>
 
-                                <button type="button" class="btn btn-secondary btn-sm edit-btn">Edit</button>
+                                    <!-- Tambahkan tombol edit dengan atribut data-id -->
+                                <button type="button" class="btn btn-secondary btn-sm edit-btn" data-id="${recipe.id}">Edit</button>
+
                                 <button type="button" class="btn btn-danger btn-sm delete-btn text-white" data-id="${recipe.id}" data-title="${recipe.title}">Delete</button>
                             </div>
                         `;
                         recipeList.appendChild(recipeItem);
                     });
 
-                    const editButtons = document.querySelectorAll('.edit-btn');
-                    editButtons.forEach(button => {
-                        button.addEventListener('click', () => {
-                            const cardBody = button.parentNode;
-                            const editForm = cardBody.querySelector('.edit-form');
-                            if (editForm.classList.contains('d-none')) {
-                                // Jika form sedang ditutup, maka buka
-                                editForm.classList.remove('d-none');
-                            } else {
-                                // Jika form sedang terbuka, maka tutup
-                                editForm.classList.add('d-none');
-                            }
+                    document.querySelectorAll('.edit-btn').forEach(btn => {
+                        btn.addEventListener('click', () => {
+                            // Dapatkan ID resep dari atribut data-id
+                            const recipeId = btn.getAttribute('data-id');
+                            // Arahkan ke halaman edit dengan ID resep
+                            window.location.href = `/post/${recipeId}/edit`;
                         });
                     });
+                    // const editButtons = document.querySelectorAll('.edit-btn');
+                    // editButtons.forEach(button => {
+                    //     button.addEventListener('click', () => {
+                    //         const cardBody = button.parentNode;
+                    //         const editForm = cardBody.querySelector('.edit-form');
+                    //         if (editForm.classList.contains('d-none')) {
+                    //             // Jika form sedang ditutup, maka buka
+                    //             editForm.classList.remove('d-none');
+                    //         } else {
+                    //             // Jika form sedang terbuka, maka tutup
+                    //             editForm.classList.add('d-none');
+                    //         }
+                    //     });
+                    // });
 
                     const saveButtons = document.querySelectorAll('.save-btn');
                     saveButtons.forEach(button => {

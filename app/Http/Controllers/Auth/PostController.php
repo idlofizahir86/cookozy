@@ -10,6 +10,7 @@ use Kreait\Auth\Request\UpdateUser;
 use Kreait\Firebase\Exception\FirebaseException;
 use App\Http\Controllers\Controller;
 use Session;
+use Illuminate\Support\Facades\Http;
 
 class PostController extends Controller
 {
@@ -43,4 +44,31 @@ class PostController extends Controller
     Session::flush();
     return redirect('/login');
   }
+
+    public function edit($id)
+        {
+            $baseUrl = '';
+
+            if ($_SERVER['HTTP_HOST'] === 'localhost' || $_SERVER['HTTP_HOST'] === '127.0.0.1') {
+                // Lokal (Development)
+                $baseUrl = 'http://localhost:8000';
+            } else {
+                // Produksi
+                $baseUrl = 'https://cookozy.web.app'; // Ganti dengan URL produksi Anda
+            }
+
+            $url = "{$baseUrl}/api/recipes/{$id}";
+
+            // Lakukan permintaan ke API untuk mendapatkan data resep berdasarkan ID
+            $response = Http::get($url);
+            $recipe = $response->json();
+
+            return view('editPost', ['recipe' => $recipe]);
+        }
+
+        public function update(Request $request, $id)
+        {
+            // Logika validasi dan penyimpanan ke database
+            return redirect()->route('post.edit', ['id' => $id])->with('success', 'Recipe updated successfully!');
+        }
 }

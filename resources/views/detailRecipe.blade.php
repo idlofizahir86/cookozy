@@ -12,12 +12,12 @@
         <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 
     @if (App::environment('production'))
-    <link href="{{ secure_url('css/welcome.css') }}" rel="stylesheet">
-    <link href="{{ secure_url('css/app.css') }}" rel="stylesheet">
-@else
-    <link href="{{ url('css/welcome.css') }}" rel="stylesheet">
-    <link href="{{ url('css/app.css') }}" rel="stylesheet">
-@endif
+        <link href="{{ secure_url('css/welcome.css') }}" rel="stylesheet">
+        <link href="{{ secure_url('css/app.css') }}" rel="stylesheet">
+    @else
+        <link href="{{ url('css/welcome.css') }}" rel="stylesheet">
+        <link href="{{ url('css/app.css') }}" rel="stylesheet">
+    @endif
     <style>
     /* Tambahkan gaya CSS di sini */
 
@@ -188,7 +188,7 @@
                 </div>
                 <div class="user-info">
                     <img src="" alt="User Image" class="user-image">
-                    {{-- {{ $recipe['user_image'] }} --}}
+                    {{ $recipe['user_image'] }}
                     <div class="user-details">
                         <p class="user-name">By {{ $recipe['user_name'] }}</p>
                         <p class="timestamp">Posted on {{ $recipe['timestamp'] }}</p>

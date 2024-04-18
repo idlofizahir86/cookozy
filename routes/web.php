@@ -21,9 +21,10 @@ Route::get('/about', function () {
     return view('about');
 });
 
-// Route::get('/edit', function () {
-//     return view('editPost');
-// });
+Route::get('/edit', function () {
+    return view('editPost');
+});
+
 
 Route::get('/recipes/detail/{id}', [App\Http\Controllers\RecipeController::class, 'showView']);
 
@@ -44,6 +45,10 @@ Route::resource('/account', App\Http\Controllers\Auth\AccountController::class)-
 Route::resource('/profile', App\Http\Controllers\Auth\ProfileController::class)->middleware('user','fireauth');
 
 Route::resource('/post', App\Http\Controllers\Auth\PostController::class)->middleware('user','fireauth');
+Route::get('/post/{id}/edit', [App\Http\Controllers\Auth\PostController::class, 'edit'])->middleware('user','fireauth');
+Route::put('/post/{id}', [App\Http\Controllers\Auth\PostController::class, 'update'])->middleware('user','fireauth');
+
+// Route::resource('/post/edit', [App\Http\Controllers\Auth\PostController::class, 'edit'])->middleware('user','fireauth');
 
 Route::resource('/password/reset', App\Http\Controllers\Auth\ResetController::class);
 
