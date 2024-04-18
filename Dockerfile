@@ -38,7 +38,5 @@ RUN apk add --no-cache $PHPIZE_DEPS \
 # Pasang ekstensi gRPC
 RUN pecl install grpc && docker-php-ext-enable grpc
 
-
-
 # Script untuk startup
 CMD sh /app/docker/startup.sh

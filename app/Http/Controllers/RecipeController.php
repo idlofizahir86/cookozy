@@ -59,6 +59,41 @@ class RecipeController extends Controller
         }
     }
 
+    public function showView($id)
+    {
+        $baseUrl = '';
+
+        if ($_SERVER['HTTP_HOST'] === 'localhost' || $_SERVER['HTTP_HOST'] === '127.0.0.1') {
+            // Lokal (Development)
+            $baseUrl = 'http://localhost:8000';
+        } else {
+            // Produksi
+            $baseUrl = 'https://cookozy-pwohh4kjqa-et.a.run.app'; // Ganti dengan URL produksi Anda
+        }
+
+        // Lakukan permintaan ke API untuk mendapatkan data resep berdasarkan ID
+        $request = Request::create("{$baseUrl}/api/recipes/{$id}", 'GET');
+        $response = app()->handle($request);
+        // dd($response);
+
+        // Memeriksa apakah permintaan berhasil
+        if ($response->getStatusCode() === 200) {
+            // Ubah respons ke JSON
+            $jsonContent = $response->getContent();
+
+            // Decode JSON ke dalam array
+            $data = json_decode($jsonContent, true);
+
+            // Ambil data resep dari response JSON
+            $recipe = $data['data'];
+            // Tampilkan view dengan data resep
+            return view('detailRecipe', compact('recipe'));
+        } else {
+            // Jika permintaan gagal, tampilkan halaman error
+            abort(404);
+        }
+    }
+
     public function store(Request $request) {
         // Definisikan aturan validasi
         $rules = [

@@ -21,7 +21,7 @@ Route::get('/about', function () {
     return view('about');
 });
 
-// Route::get('/recipes/detail/{id}', [App\Http\Controllers\RecipeController::class, 'showView']);
+Route::get('/recipes/detail/{id}', [App\Http\Controllers\RecipeController::class, 'showView']);
 
 Auth::routes();
 
