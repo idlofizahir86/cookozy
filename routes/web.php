@@ -47,4 +47,4 @@ Route::resource('/password/reset', App\Http\Controllers\Auth\ResetController::cl
 
 Route::resource('/img', App\Http\Controllers\ImageController::class);
 
-// URL::forceScheme('https');
+URL::forceScheme('https');
