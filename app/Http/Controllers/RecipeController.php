@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use Kreait\Firebase\Firestore;
-// use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Http;
 
 class RecipeController extends Controller
 {
@@ -68,11 +68,10 @@ class RecipeController extends Controller
             $baseUrl = 'http://localhost:8000';
         } else {
             // Produksi
-            $baseUrl = 'https://cookozy-pwohh4kjqa-et.a.run.app'; // Ganti dengan URL produksi Anda
+            $baseUrl = 'https://cookozy.web.app'; // Ganti dengan URL produksi Anda
         }
 
         $url = "{$baseUrl}/api/recipes/{$id}";
-        dd($url);
 
         // Lakukan permintaan ke API untuk mendapatkan data resep berdasarkan ID
         $response = Http::get($url);
@@ -81,6 +80,7 @@ class RecipeController extends Controller
         if ($response->successful()) {
             // Ubah respons ke dalam array
             $data = $response->json();
+            // dd($data);
 
             // Ambil data resep dari respons JSON
             $recipe = $data['data'];
@@ -92,8 +92,6 @@ class RecipeController extends Controller
             abort(404);
         }
     }
-
-
 
 
     public function store(Request $request) {
@@ -158,6 +156,8 @@ public function update(Request $request, $id)
     $validatedData = $request->validate([
         'title' => 'required|string|max:255',
         'description' => 'required|string',
+        'ingredients' => 'required|string',
+        'steps' => 'required|string',
         // Sesuaikan dengan atribut lain yang ingin Anda perbarui
     ]);
 

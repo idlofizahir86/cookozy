@@ -21,7 +21,13 @@ Route::get('/about', function () {
     return view('about');
 });
 
-// Route::get('/recipes/detail/{id}', [App\Http\Controllers\RecipeController::class, 'showView']);
+// Route::get('/edit', function () {
+//     return view('editPost');
+// });
+
+Route::get('/recipes/detail/{id}', [App\Http\Controllers\RecipeController::class, 'showView']);
+
+// Route::get('/recipes/detail/edit/{id}', [App\Http\Controllers\RecipeController::class, 'editView']);
 
 Auth::routes();
 

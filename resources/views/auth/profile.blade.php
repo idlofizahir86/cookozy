@@ -49,7 +49,7 @@
                 baseUrl = 'http://localhost:8000';
             } else {
                 // Produksi
-                baseUrl = 'https://cookozy-pwohh4kjqa-et.a.run.app'; // Ganti dengan URL produksi Anda
+                baseUrl = 'https://cookozy.web.app'; // Ganti dengan URL produksi Anda
             }
             try {
                 const response = await fetch(`${baseUrl}/api/users/${userId}`);
@@ -103,7 +103,7 @@
                 baseUrl = 'http://localhost:8000';
             } else {
                 // Produksi
-                baseUrl = 'https://cookozy-pwohh4kjqa-et.a.run.app'; // Ganti dengan URL produksi Anda
+                baseUrl = 'https://cookozy.web.app'; // Ganti dengan URL produksi Anda
             }
 
             fetch(`${baseUrl}/api/recipes`)

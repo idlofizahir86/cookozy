@@ -55,7 +55,7 @@ return [
     |
     */
 
-    'url' => env('APP_URL','https://cookozy-pwohh4kjqa-et.a.run.app/'),
+    'url' => env('APP_URL','https://cookozy.web.app'),
 
     'asset_url' => env('ASSET_URL'),
 

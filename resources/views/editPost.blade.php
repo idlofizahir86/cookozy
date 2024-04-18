@@ -1,5 +1,5 @@
 @extends('layouts.app')
-<title>CooKozy | Post</title>
+<title>CooKozy | Edit Post</title>
 
 @section('content')
 <html lang="en">
@@ -54,7 +54,7 @@
 <body>
 
     <div class="container mt-5">
-    <h2 class="mb-4">Form Unggahan Resep</h2>
+    <h2 class="mb-4">Form Edit Resep</h2>
     <div class="row">
         <div class="col-md-6">
             <form id="recipeForm" enctype="multipart/form-data">
@@ -105,16 +105,6 @@
                     </div>
                 </div>
             </form>
-        </div>
-        <div class="col-md-6">
-            <div class="form-group">
-                <label for="gambar">Unggah Gambar</label>
-                <div class="custom-file">
-                    <input type="file" class="custom-file-input" id="gambar" name="image" onchange="previewImage(event)">
-                    <label class="custom-file-label" for="gambar">Pilih file</label>
-                    <img id="preview" class="preview-image" src="#" alt="Preview">
-                </div>
-            </div>
         </div>
     </div>
 </div>
@@ -186,8 +176,7 @@ function getAllSteps() {
 function submitForm() {
     var form = document.getElementById('recipeForm');
     var formData = new FormData(form);
-    var loading = document.getElementById('loading');
-    var imageFile = document.getElementById('gambar').files[0]; // Mengambil gambar yang dipilih oleh pengguna
+    var loading = document.getElementById('loading'); // Mengambil gambar yang dipilih oleh pengguna
 
     loading.style.display = 'block';
     let baseUrl;

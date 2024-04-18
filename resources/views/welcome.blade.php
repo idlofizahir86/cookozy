@@ -71,7 +71,7 @@
         baseUrl = 'http://localhost:8000';
     } else {
         // Produksi
-        baseUrl = 'https://cookozy-pwohh4kjqa-et.a.run.app'; // Ganti dengan URL produksi Anda
+        baseUrl = 'https://cookozy.web.app'; // Ganti dengan URL produksi Anda
     }
 
     fetch(`${baseUrl}/api/recipes`)
@@ -94,10 +94,9 @@
                 <p class="card-text">${recipe.description}</p>
             </div>
             <div class="card-body">
-                <a href="#" class="btn btn-primary" style="position: absolute; bottom: 15px;">See More Recipe <i class="fas fa-chevron-right"></i></a>
+                <a href="/recipes/detail/${recipe.id}" class="btn btn-primary" style="position: absolute; bottom: 15px;">See More Recipe <i class="fas fa-chevron-right"></i></a>
             </div>`;
             recipeList.appendChild(recipeItem);
-            // /recipes/detail/${recipe.id}
         });
 
         // Tambahkan kode carousel ke dalam blok ini

@@ -187,7 +187,8 @@
                     @endif
                 </div>
                 <div class="user-info">
-                    <img src="{{ $recipe['user_image'] }}" alt="User Image" class="user-image">
+                    <img src="" alt="User Image" class="user-image">
+                    {{-- {{ $recipe['user_image'] }} --}}
                     <div class="user-details">
                         <p class="user-name">By {{ $recipe['user_name'] }}</p>
                         <p class="timestamp">Posted on {{ $recipe['timestamp'] }}</p>
