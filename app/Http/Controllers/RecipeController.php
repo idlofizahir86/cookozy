@@ -63,6 +63,14 @@ class RecipeController extends Controller
     {
         $baseUrl = '';
 
+        // Menginisialisasi $idRecipe dengan nilai yang diterima
+        $idRecipe = $id;
+
+        // Memeriksa apakah $idRecipe tidak kosong
+        if (empty($idRecipe)) {
+            $idRecipe = "";
+        }
+
         if ($_SERVER['HTTP_HOST'] === 'localhost' || $_SERVER['HTTP_HOST'] === '127.0.0.1') {
             // Lokal (Development)
             $baseUrl = 'http://localhost:8000';
@@ -71,7 +79,9 @@ class RecipeController extends Controller
             $baseUrl = 'https://cookozy-pwohh4kjqa-et.a.run.app'; // Ganti dengan URL produksi Anda
         }
 
-        $uri = '{$baseUrl}/api/recipes/{$id}';
+        // Menggunakan kutip ganda agar variabel dievaluasi
+        $uri = "{$baseUrl}/api/recipes/{$idRecipe}";
+
         // Lakukan permintaan ke API untuk mendapatkan data resep berdasarkan ID
         $request = Request::create($uri, 'GET');
         $response = app()->handle($request);
@@ -94,6 +104,7 @@ class RecipeController extends Controller
             abort(404);
         }
     }
+
 
     public function store(Request $request) {
         // Definisikan aturan validasi
