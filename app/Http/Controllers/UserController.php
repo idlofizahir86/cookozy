@@ -52,5 +52,50 @@ class UserController extends Controller
         return new UserResource($user);
     }
 
-    // Implement other CRUD methods as needed
+    public function store(Request $request, $uid) {
+    // Definisikan aturan validasi
+    $rules = [
+        'email' => 'required',
+        'name' => 'required',
+    ];
+
+    // Lakukan validasi
+    $validator = Validator::make($request->all(), $rules);
+
+    // Jika validasi gagal, kembalikan pesan error
+    if ($validator->fails()) {
+        return response()->json(['error' => $validator->errors()], 400);
+    }
+
+    try {
+        // Persiapkan data untuk dokumen baru dengan UID sebagai ID
+        $data = [
+            'email' => $request->input('email'),
+            'nama' => $request->input('name'),
+            'imageUrl' => "https://firebasestorage.googleapis.com/v0/b/cookozy-if4506.appspot.com/o/Assets%2Favatar.webp?alt=media&token=8fab0c44-9448-4858-a5fc-cd9ce0775526",
+            'role' => "User"
+        ];
+
+        // Tambahkan dokumen baru ke koleksi 'users' di Firestore dengan UID sebagai ID
+        $firestore = Firebase::firestore();
+        $newUserRef = $firestore->database()->collection('users')->document($uid);
+        $newUserRef->set($data);
+
+        $newUserId = $newUserRef->id();
+
+        $newUserData = $newUserRef->snapshot()->data();
+
+        // Persiapan respons JSON dengan pesan dan data
+        $response = [
+            'message' => 'User created successfully',
+            'user_id' => $newUserId,
+            'user_data' => $newUserData
+        ];
+
+        return response()->json($response, 201);
+        } catch (FirebaseException $e) {
+            // Tangani kesalahan autentikasi Firebase
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
 }

@@ -80,7 +80,7 @@ class LoginController extends Controller
 
         // Redirect ke halaman yang sesuai setelah berhasil login
         return redirect($this->redirectPath());
-    } catch (\Kreait\Firebase\Exception\Auth\SignIn\FailedToSignIn $e) {
+    } catch (FirebaseException $e) {
         throw ValidationException::withMessages([
             $this->username() => [trans("auth.failed")],
         ]);

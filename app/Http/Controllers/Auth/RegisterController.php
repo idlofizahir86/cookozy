@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
@@ -65,20 +66,28 @@ class RegisterController extends Controller
      * @return \App\Models\User
      */
     protected function register(Request $request) {
-       try {
-         $this->validator($request->all())->validate();
-         $userProperties = [
-            'email' => $request->input('email'),
-            'emailVerified' => false,
-            'password' => $request->input('password'),
-            'displayName' => $request->input('name'),
-            'disabled' => false,
-         ];
-         $createdUser = $this->auth->createUser($userProperties);
-         return redirect()->route('login');
-       } catch (FirebaseException $e) {
-          Session::flash('error', $e->getMessage());
-          return back()->withInput();
-       }
-    }
+        try {
+            $this->validator($request->all())->validate();
+            $userProperties = [
+                'email' => $request->input('email'),
+                'emailVerified' => false,
+                'password' => $request->input('password'),
+                'displayName' => $request->input('name'),
+                'disabled' => false,
+            ];
+            $createdUser = $this->auth->createUser($userProperties);
+
+          // Ambil UID pengguna yang baru saja terbuat
+            $uid = $createdUser->uid;
+
+          // Panggil UserController untuk menambahkan dokumen baru ke Firestore
+            $userController = new UserController();
+            $userController->store($request, $uid);
+
+            return redirect()->route('login');
+        } catch (FirebaseException $e) {
+            Session::flash('error', $e->getMessage());
+            return back()->withInput();
+        }
+     }
 }

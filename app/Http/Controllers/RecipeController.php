@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use Kreait\Firebase\Firestore;
+use Illuminate\Support\Facades\Http;
 
 class RecipeController extends Controller
 {
@@ -41,6 +42,8 @@ class RecipeController extends Controller
         return RecipeResource::collection($data);
     }
 
+
+
     public function show($id) {
         $firestore = Firebase::firestore();
         $recipeRef = $firestore->database()->collection('recipes')->document($id);
@@ -53,6 +56,41 @@ class RecipeController extends Controller
             return new RecipeDetailResource($recipeData);
         } else {
             return response()->json(['message' => 'Recipe not found.'], 404);
+        }
+    }
+
+    public function showView($id)
+    {
+        $baseUrl = '';
+
+        if ($_SERVER['HTTP_HOST'] === 'localhost' || $_SERVER['HTTP_HOST'] === '127.0.0.1') {
+            // Lokal (Development)
+            $baseUrl = 'http://localhost:8000';
+        } else {
+            // Produksi
+            $baseUrl = 'https://cookozy-pwohh4kjqa-et.a.run.app'; // Ganti dengan URL produksi Anda
+        }
+
+        // Lakukan permintaan ke API untuk mendapatkan data resep berdasarkan ID
+        $request = Request::create("{$baseUrl}/api/recipes/{$id}", 'GET');
+        $response = app()->handle($request);
+        // dd($response);
+
+        // Memeriksa apakah permintaan berhasil
+        if ($response->getStatusCode() === 200) {
+            // Ubah respons ke JSON
+            $jsonContent = $response->getContent();
+
+            // Decode JSON ke dalam array
+            $data = json_decode($jsonContent, true);
+
+            // Ambil data resep dari response JSON
+            $recipe = $data['data'];
+            // Tampilkan view dengan data resep
+            return view('detailRecipe', compact('recipe'));
+        } else {
+            // Jika permintaan gagal, tampilkan halaman error
+            abort(404);
         }
     }
 
@@ -221,5 +259,7 @@ public function update(Request $request, $id)
         // Kirimkan data resep ke view edit.blade.php
         return view('recipes.edit', compact('recipe'));
     }
+
+
 
 }

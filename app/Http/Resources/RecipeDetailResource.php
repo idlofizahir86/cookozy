@@ -24,6 +24,7 @@ class RecipeDetailResource extends JsonResource
             'title' => $this['title'],
             'user_id' => $this['user_id'],
             'user_name' => $user['nama'] ?? null,
+            'user_image' => $user['imageUrl'] ?? null,
             'timestamp' => date_format($timestamp, "Y-m-d H:i:s"),
             'description' => $this['description'],
             'image_url' => $this['image_url'],

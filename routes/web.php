@@ -21,6 +21,8 @@ Route::get('/about', function () {
     return view('about');
 });
 
+Route::get('/recipes/detail/{id}', [App\Http\Controllers\RecipeController::class, 'showView']);
+
 Auth::routes();
 
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('user');
@@ -39,6 +41,10 @@ Route::resource('/post', App\Http\Controllers\Auth\PostController::class)->middl
 
 Route::resource('/password/reset', App\Http\Controllers\Auth\ResetController::class);
 
+
+
+// Route::post('/register', [App\Http\Controllers\RegisterController::class, 'register']);
+
 Route::resource('/img', App\Http\Controllers\ImageController::class);
 
-URL::forceScheme('https');
+// URL::forceScheme('https');

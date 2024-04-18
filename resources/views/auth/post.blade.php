@@ -83,9 +83,9 @@
                     </div>
                     <button type="button" class="btn btn-success mt-3" onclick="addStep()">Add Step</button>
                 </div>
-                <div class="form-group">
+                <div class="form-group-2">
                     <label for="kategori">Kategori</label>
-                    <select class="form-control" id="type" name="kategori">
+                    <select class="form-control-2" id="type" name="kategori">
                         <option>Sarapan</option>
                         <option>Makan Siang</option>
                         <option>Makan Malam</option>
@@ -93,7 +93,7 @@
                 </div>
                 <div class="form-group">
                     <label for="kesulitan">Tingkat Kesulitan</label>
-                    <select class="form-control" id="level" name="kesulitan">
+                    <select class="form-control-2" id="level" name="kesulitan">
                         <option>Mudah</option>
                         <option>Menengah</option>
                         <option>Sulit</option>
@@ -133,7 +133,7 @@
     var newStepRow = document.createElement('div');
     newStepRow.classList.add('step-row');
     newStepRow.innerHTML = `
-        <input type="text" name="step[]" placeholder="Step" class="form-control step-input">
+        <input type="text" name="step[]" placeholder="Step" class="form-control-2 step-input">
         <button type="button" class="btn btn-danger" onclick="removeStep(this)">Remove</button>
     `;
     stepContainer.appendChild(newStepRow);
