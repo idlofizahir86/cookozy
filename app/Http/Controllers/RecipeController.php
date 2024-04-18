@@ -71,8 +71,9 @@ class RecipeController extends Controller
             $baseUrl = 'https://cookozy-pwohh4kjqa-et.a.run.app'; // Ganti dengan URL produksi Anda
         }
 
+        $uri = '{$baseUrl}/api/recipes/{$id}';
         // Lakukan permintaan ke API untuk mendapatkan data resep berdasarkan ID
-        $request = Request::create("{$baseUrl}/api/recipes/{$id}", 'GET');
+        $request = Request::create($uri, 'GET');
         $response = app()->handle($request);
         // dd($response);
 
