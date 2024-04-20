@@ -93,6 +93,40 @@ class RecipeController extends Controller
         }
     }
 
+    public function verifiedView($id)
+    {
+        $baseUrl = '';
+
+        if ($_SERVER['HTTP_HOST'] === 'localhost' || $_SERVER['HTTP_HOST'] === '127.0.0.1') {
+            // Lokal (Development)
+            $baseUrl = 'http://localhost:8000';
+        } else {
+            // Produksi
+            $baseUrl = 'https://cookozy.web.app'; // Ganti dengan URL produksi Anda
+        }
+
+        $url = "{$baseUrl}/api/recipes/{$id}";
+
+        // Lakukan permintaan ke API untuk mendapatkan data resep berdasarkan ID
+        $response = Http::get($url);
+
+        // Memeriksa apakah permintaan berhasil
+        if ($response->successful()) {
+            // Ubah respons ke dalam array
+            $data = $response->json();
+            // dd($data);
+
+            // Ambil data resep dari respons JSON
+            $recipe = $data['data'];
+
+            // Tampilkan view dengan data resep
+            return view('verifiedRecipe', compact('recipe'));
+        } else {
+            // Jika permintaan gagal, tampilkan halaman error
+            abort(404);
+        }
+    }
+
 
     public function store(Request $request) {
         // Definisikan aturan validasi
@@ -149,6 +183,58 @@ class RecipeController extends Controller
         return response()->json($response, 201);
     }
 
+    public function verified(Request $request, $id)
+{
+    // Validasi request
+    $validatedData = $request->validate([
+        'verified' => 'required|boolean',
+        // Sesuaikan dengan atribut lain yang ingin Anda perbarui
+    ]);
+
+    // Dapatkan UID pengguna yang sedang login
+    $uid = Auth::id();
+
+    // Konfigurasi Firebase menggunakan credentials
+    $serviceAccount = base_path('resources/credentials/firebase_credentials.json');
+    $factory = (new Factory)->withServiceAccount($serviceAccount);
+    $this->firestore = $factory->createFirestore();
+
+
+    // Dapatkan dokumen resep dari Firestore berdasarkan ID
+    $firestore = Firebase::firestore();
+    $recipeRef = $firestore->database()->collection('recipes')->document($id);
+    $recipeSnapshot = $recipeRef->snapshot();
+
+    // Periksa apakah dokumen ditemukan
+    if (!$recipeSnapshot->exists()) {
+        return response()->json(['error' => 'Recipe not found'], 404);
+    }
+
+    // Dapatkan data resep
+    $recipeData = $recipeSnapshot->data();
+
+    // dd($recipeData);
+    // // Periksa apakah pengguna yang sedang login memiliki akses untuk memperbarui resep
+    // if ($recipeData['user_id'] !== $uid) {
+    //     $message = "Unauthorized access: User $uid attempted to update recipe with ID $id owned by user {$recipeData['user_id']}.";
+    //     \Illuminate\Support\Facades\Log::info($message);
+    //     return response()->json([
+    //         'error' => 'Unauthorized',
+    //         'message' => 'User is not authorized to update this recipe.',
+    //         'user_id_attempted' => $uid,
+    //         'user_id_recipe_owner' => $recipeData['user_id']
+    //     ], 401);
+    // }
+
+    // Perbarui data resep dengan data yang diterima dari request
+    $updatedData = array_merge($recipeData, $validatedData);
+
+    // Simpan data yang diperbarui kembali ke Firestore
+    $recipeRef->set($updatedData);
+
+    // Respon sukses
+    return response()->json(['message' => 'Recipe updated successfully']);
+}
 
 public function update(Request $request, $id)
 {

@@ -220,7 +220,75 @@
                 </div>
             </div>
         </div>
+
+        <button id="verifyButton" class="btn btn-success btn-block mt-3">
+            <i class="fas fa-check-circle mr-1"></i>Verified
+        </button>
+
     </div>
+        <script>
+                // Ambil recipeId dari data yang digunakan untuk mengisi halaman
+                const recipeId = window.location.pathname.split('/')[3];
+
+
+                fetch(`/api/recipes/${recipeId}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(recipe => {
+                    console.log(recipe)
+                })
+                .catch(error => {
+                    console.error('There was an error!', error);
+                    alert('Error fetching recipe data. Please try again later.');
+                });
+
+                const verifyButton = document.getElementById('verifyButton');
+
+                verifyButton.addEventListener('click', function(event) {
+                    event.preventDefault();
+
+                    verifSend();
+                });
+
+                function verifSend() {
+                    // Kirim permintaan untuk mengubah status verified menjadi true
+                    let baseUrl;
+
+                    if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+                        // Lokal (Development)
+                        baseUrl = 'http://localhost:8000';
+                    } else {
+                        // Produksi
+                        baseUrl = 'https://cookozy.web.app'; // Ganti dengan URL produksi Anda
+                    }
+                    fetch(`${baseUrl}/api/recipes/verified/${recipeId}`, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                        },
+                        body: JSON.stringify({
+                            verified: true,
+                            // Sisipkan atribut lain yang ingin Anda perbarui
+                        }),
+                    })
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Failed to update recipe');
+                        }
+                        alert('Recipe verified successfully!');
+                        window.location.href = `${baseUrl}/admin`;
+                    })
+                    .catch(error => {
+                        console.error('Error verifying recipe:', error);
+                    });
+                }
+        </script>
+
         <script src="https://kit.fontawesome.com/a076d05399.js"></script> <!-- Sertakan script font awesome untuk ikon -->
     </body>
 

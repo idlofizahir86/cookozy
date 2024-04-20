@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RecipeController;
+use App\Http\Controllers\BannerController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\CheckAuthentication;
@@ -24,7 +25,10 @@ Route::get('/recipes', [RecipeController::class, 'index'])->name('recipes.index'
 Route::get('/recipes/{id}', [RecipeController::class, 'show'])->name('recipes.show');
 Route::get('/recipes/{id}/edit', [RecipeController::class, 'edit'])->name('recipes.edit');
 Route::put('/recipes/{id}', [RecipeController::class, 'update'])->name('recipes.update');
+Route::put('/recipes/verified/{id}', [RecipeController::class, 'verified'])->name('recipes.verified');
 Route::delete('/recipes/delete/{id}',[RecipeController::class, 'destroy'])->name('recipes.delete');
+
+Route::get('/banners', [BannerController::class, 'index'])->name('banner.index');
 
 Route::get('/users', [UserController::class, 'index'])->name('users.index');
 Route::get('/users/{id}', [UserController::class, 'show'])->name('users.show');
@@ -52,4 +56,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 
-URL::forceScheme('https');
+// URL::forceScheme('https');

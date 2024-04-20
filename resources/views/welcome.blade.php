@@ -74,63 +74,138 @@
         baseUrl = 'https://cookozy.web.app'; // Ganti dengan URL produksi Anda
     }
 
-    fetch(`${baseUrl}/api/recipes`)
-    .then(response => response.json())
-    .then(data => {
-        loadingIndicator.style.display = 'none'; // Menyembunyikan indikator loading setelah proses selesai
+    // Membuat promise untuk memuat data dari API `banners`
+    const fetchBanners = fetch(`${baseUrl}/api/banners`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Failed to fetch banners');
+            }
+            return response.json();
+        });
 
-        data.data.forEach(recipe => {
+    // Membuat promise untuk memuat data dari API `recipes`
+    const fetchRecipes = fetch(`${baseUrl}/api/recipes`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Failed to fetch recipes');
+            }
+            return response.json();
+        });
+
+    Promise.all([fetchBanners, fetchRecipes])
+    .then(([banners, recipes]) => {
+        // Proses data dari API `banners`
+        const carouselIndicators = document.createElement('ol');
+        carouselIndicators.classList.add('carousel-indicators');
+        const carouselInner = document.createElement('div');
+        carouselInner.classList.add('carousel-inner');
+        let isFirst = true;
+
+        banners.data.forEach((banner, index) => {
+            const carouselItem = document.createElement('div');
+            carouselItem.classList.add('carousel-item');
+            if (isFirst) {
+                carouselItem.classList.add('active');
+                isFirst = false;
+            }
+
+            const img = document.createElement('img');
+            img.classList.add('d-block', 'w-100');
+            img.src = banner.imageUrl;
+            img.alt = `Slide ${index + 1}`;
+
+            carouselItem.appendChild(img);
+            carouselInner.appendChild(carouselItem);
+
+            const indicator = document.createElement('li');
+            indicator.setAttribute('data-target', '#carouselExampleIndicators');
+            indicator.setAttribute('data-slide-to', index.toString());
+            if (isFirst) {
+                indicator.classList.add('active');
+                isFirst = false;
+            }
+
+            carouselIndicators.appendChild(indicator);
+        });
+
+        const prevControl = document.createElement('a');
+        prevControl.classList.add('carousel-control-prev');
+        prevControl.setAttribute('href', '#carouselExampleIndicators');
+        prevControl.setAttribute('role', 'button');
+        prevControl.setAttribute('data-slide', 'prev');
+
+        const prevIcon = document.createElement('span');
+        prevIcon.classList.add('carousel-control-prev-icon');
+        prevIcon.setAttribute('aria-hidden', 'true');
+
+        prevControl.appendChild(prevIcon);
+
+        const prevText = document.createElement('span');
+        prevText.classList.add('sr-only');
+        prevText.textContent = 'Previous';
+
+        prevControl.appendChild(prevText);
+
+        const nextControl = document.createElement('a');
+        nextControl.classList.add('carousel-control-next');
+        nextControl.setAttribute('href', '#carouselExampleIndicators');
+        nextControl.setAttribute('role', 'button');
+        nextControl.setAttribute('data-slide', 'next');
+
+        const nextIcon = document.createElement('span');
+        nextIcon.classList.add('carousel-control-next-icon');
+        nextIcon.setAttribute('aria-hidden', 'true');
+
+        nextControl.appendChild(nextIcon);
+
+        const nextText = document.createElement('span');
+        nextText.classList.add('sr-only');
+        nextText.textContent = 'Next';
+
+        nextControl.appendChild(nextText);
+
+        const carousel = document.createElement('div');
+        carousel.classList.add('carousel', 'slide');
+        carousel.setAttribute('id', 'carouselExampleIndicators');
+        carousel.setAttribute('data-ride', 'carousel');
+
+        carousel.appendChild(carouselIndicators);
+        carousel.appendChild(carouselInner);
+        carousel.appendChild(prevControl);
+        carousel.appendChild(nextControl);
+
+        carouselContainer.appendChild(carousel);
+
+        // Proses data dari API `recipes`
+        recipes.data.forEach(recipe => {
             const recipeItem = document.createElement('div');
             recipeItem.classList.add('card', 'p-0');
             recipeItem.innerHTML = `
-            <img class="card-img-top" src="${recipe.image_url}" alt="Recipe" style="object-fit: cover; width: 100%; height: 220px;">
-            <div class="card-body">
-                <h6 class="card-title">Posted by <a id="post-by">${recipe.user_name}</a></h6>
-                <div id="tag-lines">
-                    <span class="tag">${recipe.type}</span>
-                    <span class="tag">${recipe.level}</span>
+                <img class="card-img-top" src="${recipe.image_url}" alt="Recipe" style="object-fit: cover; width: 100%; height: 220px;">
+                <div class="card-body">
+                    <h6 class="card-title">Posted by <a id="post-by">${recipe.user_name}</a></h6>
+                    <div id="tag-lines">
+                        <span class="tag">${recipe.type}</span>
+                        <span class="tag">${recipe.level}</span>
+                    </div>
+                    <h5 class="card-title">${recipe.title}</h5>
+                    <p class="card-text">${recipe.description}</p>
                 </div>
-                <h5 class="card-title">${recipe.title}</h5>
-                <p class="card-text">${recipe.description}</p>
-            </div>
-            <div class="card-body">
-                <a href="/recipes/detail/${recipe.id}" class="btn btn-primary" style="position: absolute; bottom: 15px;">See More Recipe <i class="fas fa-chevron-right"></i></a>
-            </div>`;
+                <div class="card-body">
+                    <a href="/recipes/detail/${recipe.id}" class="btn btn-primary" style="position: absolute; bottom: 15px;">See More Recipe <i class="fas fa-chevron-right"></i></a>
+                </div>`;
             recipeList.appendChild(recipeItem);
         });
 
-        // Tambahkan kode carousel ke dalam blok ini
-        carouselContainer.innerHTML = `
-        <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-            <ol class="carousel-indicators">
-                <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-                <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-                <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-            </ol>
-            <div class="carousel-inner">
-                <div class="carousel-item active">
-                    <img class="d-block w-100" src="https://firebasestorage.googleapis.com/v0/b/cookozy-if4506.appspot.com/o/Assets%2FBanner%2FBANNER1.png?alt=media&token=ae15ede3-94e7-4fde-a052-e8cc83a9832e" alt="First slide">
-                </div>
-                <div class="carousel-item">
-                    <img class="d-block w-100" src="https://firebasestorage.googleapis.com/v0/b/cookozy-if4506.appspot.com/o/Assets%2FBanner%2FBANNER2.png?alt=media&token=6fa2bec6-6aec-4fc9-aac9-ad40dc4922c7" alt="Second slide">
-                </div>
-                <div class="carousel-item">
-                    <img class="d-block w-100" src="https://firebasestorage.googleapis.com/v0/b/cookozy-if4506.appspot.com/o/Assets%2FBanner%2FBANNER3.png?alt=media&token=95a7ba79-2573-4d13-8a21-3e733e27869f" alt="Third slide">
-                </div>
-            </div>
-            <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="sr-only">Previous</span>
-            </a>
-            <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="sr-only">Next</span>
-            </a>
-        </div>`;
+        // Sembunyikan indikator loading setelah kedua proses selesai
+        loadingIndicator.style.display = 'none';
     })
     .catch(error => {
-        console.error('Error fetching recipes:', error);
+        console.error('Error:', error);
+        // Handle error
+        loadingIndicator.style.display = 'none';
     });
+
 });
     </script>
 

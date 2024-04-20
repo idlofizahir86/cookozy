@@ -29,6 +29,7 @@ class RecipeResource extends JsonResource
             'image_url' => $this['image_url'],
             'level' => $this['level'],
             'type' => $this['type'],
+            'verified' => $this['verified'],
         ];
 
     }

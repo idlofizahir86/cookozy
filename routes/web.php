@@ -57,11 +57,13 @@ Route::get('/edit', function () {
 
 Route::get('/recipes/detail/{id}', [App\Http\Controllers\RecipeController::class, 'showView']);
 
+Route::get('/recipes/verified/{id}', [App\Http\Controllers\RecipeController::class, 'verifiedView'])->middleware('fireauth');
+
 // Route::get('/recipes/detail/edit/{id}', [App\Http\Controllers\RecipeController::class, 'editView']);
 
 Auth::routes();
 
-    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('user');
+    Route::get('/admin', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('user');
 
 // Route::get('/home/customer', [App\Http\Controllers\HomeController::class, 'customer'])->middleware('user','fireauth');
 
@@ -87,4 +89,4 @@ Route::resource('/password/reset', App\Http\Controllers\Auth\ResetController::cl
 
 Route::resource('/img', App\Http\Controllers\ImageController::class);
 
-URL::forceScheme('https');
+// URL::forceScheme('https');

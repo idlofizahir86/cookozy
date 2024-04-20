@@ -28,7 +28,7 @@
     </div>
 
     <div class="container mt-5">
-        <h1 class="mb-4">Recipe App</h1>
+        <h1 class="mb-4">Admin Dashboard</h1>
         <div id="recipeList"></div>
     </div>
 
@@ -53,7 +53,7 @@
             fetch(`${baseUrl}/api/recipes`)
                 .then(response => response.json())
                 .then(data => {
-                    const filteredRecipes = data.data.filter(recipe => recipe.user_id === userId);
+                    const filteredRecipes = data.data.filter(recipe => recipe.verified === false);
                     loadingIndicator.style.display = 'none'; // Menyembunyikan indikator loading setelah proses selesai
 
                     filteredRecipes.forEach(recipe => {
@@ -65,25 +65,21 @@
                                 <p class="card-text">${recipe.description}</p>
                                 <p class="card-text">Author: ${recipe.user_name}</p>
 
-                                <form class="edit-form d-none">
-                                    <div class="form-group">
-                                        <label for="editTitle_${recipe.id}">Title</label>
-                                        <input type="text" class="form-control" id="editTitle_${recipe.id}" value="${recipe.title}">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="editDescription_${recipe.id}">Description</label>
-                                        <textarea class="form-control" id="editDescription_${recipe.id}" rows="3">${recipe.description}</textarea>
-                                    </div>
-                                    <button type="button" class="btn btn-primary btn-sm save-btn" data-id="${recipe.id}">Save</button>
-                                    <br>
-                                    <br>
-                                    </form>
 
-                                <button type="button" class="btn btn-secondary btn-sm edit-btn">Edit</button>
+                                <button type="button" class="btn btn-secondary btn-sm edit-btn" data-id="${recipe.id}" >See</button>
                                 <button type="button" class="btn btn-danger btn-sm delete-btn text-white" data-id="${recipe.id}" data-title="${recipe.title}">Delete</button>
                             </div>
                         `;
                         recipeList.appendChild(recipeItem);
+                    });
+
+                    document.querySelectorAll('.edit-btn').forEach(btn => {
+                        btn.addEventListener('click', () => {
+                            // Dapatkan ID resep dari atribut data-id
+                            const recipeId = btn.getAttribute('data-id');
+                            // Arahkan ke halaman edit dengan ID resep
+                            window.location.href = `/recipes/verified/${recipeId}`;
+                        });
                     });
 
                     const editButtons = document.querySelectorAll('.edit-btn');
@@ -101,40 +97,6 @@
                         });
                     });
 
-                    const saveButtons = document.querySelectorAll('.save-btn');
-                    saveButtons.forEach(button => {
-                        button.addEventListener('click', () => {
-                            const recipeId = button.dataset.id;
-                            const editTitle = document.querySelector(`#editTitle_${recipeId}`).value;
-                            const editDescription = document.querySelector(`#editDescription_${recipeId}`).value;
-
-                            fetch(`http://127.0.0.1:8000/api/recipes/${recipeId}`, {
-                                method: 'PUT',
-                                headers: {
-                                    'Content-Type': 'application/json',
-                                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                                },
-                                body: JSON.stringify({
-                                    title: editTitle,
-                                    description: editDescription,
-                                }),
-                            })
-                            .then(response => {
-                                if (!response.ok) {
-                                    throw new Error('Failed to update recipe');
-                                }
-                                // Handle jika berhasil diperbarui
-                                const editForm = button.closest('.edit-form');
-                                editForm.classList.add('d-none');
-
-                                // Perbarui halaman
-                                location.reload();
-                            })
-                            .catch(error => {
-                                console.error('Error updating recipe:', error);
-                            });
-                        });
-                    });
 
                     const deleteButtons = document.querySelectorAll('.delete-btn');
                     deleteButtons.forEach(button => {
