@@ -4,7 +4,12 @@
     </IfModule>
 
     RewriteEngine On
-    RewriteEngine on
+
+    # Set Access-Control-Allow-Origin header
+    <IfModule mod_headers.c>
+        Header set Access-Control-Allow-Origin "*"
+    </IfModule>
+
     RewriteRule ^$ public/ [L]
     RewriteRule (.*) public/$1 [L]
 

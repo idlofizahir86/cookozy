@@ -43,6 +43,13 @@
             margin-right: 10px;
         }
     </style>
+    @if (App::environment('production'))
+        <link href="{{ secure_url('css/welcome.css') }}" rel="stylesheet">
+        <link href="{{ secure_url('css/app.css') }}" rel="stylesheet">
+    @else
+        <link href="{{ url('css/welcome.css') }}" rel="stylesheet">
+        <link href="{{ url('css/app.css') }}" rel="stylesheet">
+    @endif
 </head>
 <body>
 <div class="container mt-5">
@@ -70,7 +77,7 @@
                     <button type="button" class="btn btn-success mt-3" onclick="addStep()">Add Step</button>
                 </div>
 
-                <button type="button" class="btn btn-primary" onclick="submitForm()">Save</button>
+                <button type="button" class="btn btn-primary" id="saveButton">Save</button>
                 <div id="loading">
                     <div class="spinner-border text-primary mt-3" role="status">
                         <span class="sr-only">Loading...</span>
@@ -139,7 +146,7 @@
             stepInputs.forEach(function(stepInput) {
                 // Menambahkan nilai input ke dalam variabel allSteps, dipisahkan oleh newline jika bukan input pertama
                 if (allSteps !== '') {
-                    allSteps += '\n';
+                    allSteps += '\r\n';
                 }
                 allSteps += stepInput.value;
             });
@@ -167,6 +174,19 @@
     }
 
     // Function to submit the form
+
+    // Misalkan Anda memiliki tombol "Simpan" dengan id 'saveButton'
+    const saveButton = document.getElementById('saveButton');
+
+    // Menambahkan event listener untuk mendengarkan klik pada tombol "Simpan"
+    saveButton.addEventListener('click', function(event) {
+        // Menghentikan perilaku default dari tombol (misalnya mengirimkan formulir secara sinkron)
+        event.preventDefault();
+
+        // Memanggil fungsi submitForm untuk mengirimkan formulir pembaruan resep
+        submitForm();
+    });
+
     function submitForm() {
         var form = document.getElementById('recipeForm');
         var formData = new FormData(form);
@@ -203,10 +223,9 @@
             }
             // Handle jika berhasil diperbarui
             const editForm = document.getElementById('recipeForm');
-            editForm.reset(); // Mengosongkan formulir setelah pembaruan berhasil
             alert('Recipe updated successfully!');
-
-
+            editForm.reset(); // Mengosongkan formulir setelah pembaruan berhasil
+            window.location.href = `${baseUrl}/profile`;
         })
         .catch(error => {
             console.error('Error updating recipe:', error);

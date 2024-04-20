@@ -108,6 +108,7 @@
         <div class="col-md-6">
             <div class="form-group">
                 <label for="gambar">Unggah Gambar</label>
+                <p>Ukuran gambar kurang dari 2MB</p>
                 <div class="custom-file">
                     <input type="file" class="custom-file-input" id="gambar" name="image" onchange="previewImage(event)">
                     <label class="custom-file-label" for="gambar">Pilih file</label>
@@ -286,6 +287,7 @@ function submitForm() {
             loading.style.display = 'none';
             alert('Recipe submitted successfully!');
             form.reset();
+            window.location.href = `${baseUrl}/profile`;
         })
         .catch(error => {
             console.error('There was an error!', error);
