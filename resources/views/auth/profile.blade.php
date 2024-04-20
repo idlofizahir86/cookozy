@@ -136,9 +136,13 @@
                                     </form>
 
                                     <!-- Tambahkan tombol edit dengan atribut data-id -->
+
                                 <button type="button" class="btn btn-secondary btn-sm edit-btn" data-id="${recipe.id}">Edit</button>
 
                                 <button type="button" class="btn btn-danger btn-sm delete-btn text-white" data-id="${recipe.id}" data-title="${recipe.title}">Delete</button>
+                            </div>
+                            <div class="card-body">
+                                <a href="/recipes/detail/${recipe.id}" class="btn btn-primary" style="position: absolute; bottom: 15px;">See More Recipe <i class="fas fa-chevron-right"></i></a>
                             </div>
                         `;
                         recipeList.appendChild(recipeItem);

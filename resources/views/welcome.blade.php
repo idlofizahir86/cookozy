@@ -176,8 +176,9 @@
 
         carouselContainer.appendChild(carousel);
 
+        const filteredRecipes = recipes.data.filter(recipe => recipe.verified === true);
         // Proses data dari API `recipes`
-        recipes.data.forEach(recipe => {
+        filteredRecipes.forEach(recipe => {
             const recipeItem = document.createElement('div');
             recipeItem.classList.add('card', 'p-0');
             recipeItem.innerHTML = `
