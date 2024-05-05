@@ -6,6 +6,7 @@ use App\Http\Controllers\RecipeController;
 use App\Http\Controllers\BannerController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\CheckAuthentication;
 use App\Http\Controllers\ImageController;
 
@@ -34,6 +35,10 @@ Route::get('/users', [UserController::class, 'index'])->name('users.index');
 Route::get('/users/{id}', [UserController::class, 'show'])->name('users.show');
 
 Route::post('/login',[LoginController::class, 'login']);
+Route::post('/register',[RegisterController::class, 'register']);
+// Route::post('/logout', [LoginController::class, 'logout']);
+
+
 Route::get('/user',[LoginController::class, 'userInfo'])->middleware("auth");
 
 Route::post('/upload-image', [ImageController::class, 'store'])->name('image.store');
@@ -56,4 +61,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 
-// URL::forceScheme('https');
+URL::forceScheme('https');

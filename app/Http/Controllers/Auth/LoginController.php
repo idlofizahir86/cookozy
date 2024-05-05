@@ -143,4 +143,15 @@ class LoginController extends Controller
             return redirect()->route("login");
         }
     }
+
+    // public function logout(Request $request)
+    // {
+    //     // Contoh: Menghapus token dari sesi Laravel Passport
+    //     $request->user()->token()->revoke();
+
+    //     // Atau sesuai dengan kebutuhan Anda, Anda bisa membersihkan sesi atau melakukan tindakan lainnya.
+
+    //     return response()->json(['message' => 'Successfully logged out']);
+    // }
+
 }
