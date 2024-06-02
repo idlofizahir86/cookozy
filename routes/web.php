@@ -71,6 +71,10 @@ Route::get('/email/verify', [App\Http\Controllers\Auth\ResetController::class, '
 
 Route::post('login/{provider}/callback', 'Auth\LoginController@handleCallback');
 
+Route::get('/android-app', function () {
+    return redirect('https://firebasestorage.googleapis.com/v0/b/cookozy-if4506.appspot.com/o/Release%2FCookozy.apk?alt=media&token=d651a4a5-2946-4857-912c-a554352a3a27');
+});
+
 Route::resource('/account', App\Http\Controllers\Auth\AccountController::class)->middleware('user','fireauth');
 
 Route::resource('/profile', App\Http\Controllers\Auth\ProfileController::class)->middleware('user','fireauth');
