@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RecipeController;
 use App\Http\Controllers\BannerController;
+use App\Http\Controllers\NotifController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
@@ -30,6 +31,7 @@ Route::put('/recipes/verified/{id}', [RecipeController::class, 'verified'])->nam
 Route::delete('/recipes/delete/{id}',[RecipeController::class, 'destroy'])->name('recipes.delete');
 
 Route::get('/banners', [BannerController::class, 'index'])->name('banner.index');
+Route::get('/notifications', [NotifController::class, 'index'])->name('notif.index');
 
 Route::get('/users', [UserController::class, 'index'])->name('users.index');
 Route::get('/users/{id}', [UserController::class, 'show'])->name('users.show');
@@ -61,4 +63,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 
-URL::forceScheme('https');
+// URL::forceScheme('https');

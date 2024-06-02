@@ -66,29 +66,47 @@ class RegisterController extends Controller
      * @param  array  $data
      * @return \App\Models\User
      */
-    protected function register(Request $request) {
-        try {
-            $this->validator($request->all())->validate();
-            $userProperties = [
-                'email' => $request->input('email'),
-                'emailVerified' => false,
-                'password' => $request->input('password'),
-                'displayName' => $request->input('name'),
-                'disabled' => false,
-            ];
-            $createdUser = $this->auth->createUser($userProperties);
+    protected function register(Request $request)
+{
+    try {
+        $this->validator($request->all())->validate();
+        $userProperties = [
+            'email' => $request->input('email'),
+            'emailVerified' => false,
+            'password' => $request->input('password'),
+            'displayName' => $request->input('name'),
+            'disabled' => false,
+        ];
+        $createdUser = $this->auth->createUser($userProperties);
 
-          // Ambil UID pengguna yang baru saja terbuat
-            $uid = $createdUser->uid;
+        // Ambil UID pengguna yang baru saja terbuat
+        $uid = $createdUser->uid;
 
-          // Panggil UserController untuk menambahkan dokumen baru ke Firestore
-            $userController = new UserController();
-            $userController->store($request, $uid);
+        // Panggil UserController untuk menambahkan dokumen baru ke Firestore
+        $userController = new UserController();
+        $userController->store($request, $uid);
 
-            return redirect()->route('login');
-        } catch (FirebaseException $e) {
-            Session::flash('error', $e->getMessage());
-            return back()->withInput();
+        // Lakukan sign-in untuk mendapatkan token akses
+        $auth = app("firebase.auth");
+        $signInResult = $auth->signInWithEmailAndPassword(
+            $request["email"],
+            $request["password"]
+        );
+
+        // Ambil token akses dari respons autentikasi
+        $accessToken = $signInResult->idToken();
+
+        // Jika permintaan adalah API, kembalikan token JWT sebagai respons
+        if ($request->wantsJson()) {
+            return response()->json(['token' => $accessToken]);
         }
-     }
+
+        // Jika bukan API, redirect ke halaman login
+        return redirect()->route('login');
+    } catch (FirebaseException $e) {
+        Session::flash('error', $e->getMessage());
+        return back()->withInput();
+    }
+}
+
 }

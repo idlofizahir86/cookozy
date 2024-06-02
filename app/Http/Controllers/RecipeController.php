@@ -42,6 +42,7 @@ class RecipeController extends Controller
         return RecipeResource::collection($data);
     }
 
+    
 
 
     public function show($id) {
